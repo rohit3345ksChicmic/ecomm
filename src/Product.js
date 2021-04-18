@@ -1,6 +1,11 @@
 function Product(props){
     return (
-        <h3>Product</h3>
+        <div className="product">
+            <img className="productImage" src={"http://"+props.imageUrl} alt={props.name} />
+            <p>{props.name}</p>
+            <span>{props.price}</span>
+            
+        </div>
     )
 }
 

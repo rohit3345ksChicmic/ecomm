@@ -39,3 +39,30 @@
   width: 60%;
   padding: 10px;
 }
+
+.productsList{
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100vw;
+}
+
+.productsList > li{
+  width: 22vw;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+}
+
+.product{
+  width: 90%;
+  height: 90%;
+  padding: 10px;
+}
+
+.productImage{
+  height: 10%;
+}

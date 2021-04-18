@@ -21,6 +21,7 @@ class App extends React.Component {
       email: "",
       pw: "",
       confirmPw: "",
+      products: [],
       errorMessages: {
         userName: "",
         email: "",
@@ -47,6 +48,8 @@ class App extends React.Component {
     }));
   }
 
+
+
   validateIndividialInputs(tempErrorMessages,Regex,inputField) {
     if(!Regex.test(this.state[inputField])) {
       this.setErrorMessages(tempErrorMessages);
@@ -56,6 +59,7 @@ class App extends React.Component {
       this.setErrorMessages(tempErrorMessages);
     }
   }
+
 
   validateForm(inputField) {
     if(!this.state.isLoggingIn) {
@@ -175,11 +179,15 @@ class App extends React.Component {
       isLoggingIn: !state.isLoggingIn
     }));
   }
+
+
   showModal(){
     this.setState(()=>({
       viewModal: true
     }))
   }
+
+
   hideModal() {
     this.setState(()=>({
       viewModal: false
@@ -211,6 +219,7 @@ class App extends React.Component {
         alert("Sorry! Invalid Email or Password. You cannot log in. :(");
       }
   }
+
 
   handleSignUp(event) {
   event.preventDefault();
@@ -265,6 +274,37 @@ class App extends React.Component {
       }
   }
   
+
+  componentDidMount(){
+    let products=[]
+    fetch("https://asos2.p.rapidapi.com/products/v2/list?offset=0&categoryId=1930&limit=50&store=US&country=US&currency=USD&sort=freshness&lang=en-US&sizeSchema=US", {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-key": "412f4e8868mshfce7a47c092f508p1b67dfjsncfe1239e3622",
+        "x-rapidapi-host": "asos2.p.rapidapi.com"
+      }
+    })
+    .then(response => response.json())
+    .then(data=>{
+      products=data.products.map((product)=>{
+        let {id,name,imageUrl,price:{current:{text}}}=product;
+        let obj={
+          id,
+          name,
+          imageUrl,
+          text
+        }
+        return obj;
+      });
+      this.setState(()=>({
+        products
+      }));
+    })
+    .catch(err => {
+      console.error(err);
+    });
+
+  }
   render(){
     return (
       <div className="App">
@@ -289,7 +329,7 @@ class App extends React.Component {
         </header>
         <section>
           {/* Product Listing */}
-          <Products />
+          <Products products={this.state.products} />
         </section>
         {this.state.viewModal? <div className="backDrop" onClick={this.hideModal}></div> : null}
           {/* Backdrop */}

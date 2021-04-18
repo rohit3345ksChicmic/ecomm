@@ -1,15 +1,20 @@
 import React from 'react';
 import Product from './Product';
+import './App.css';
 class Products extends React.Component {
     // constructor(props) {
     //     super(props);
     // }
     render() {
         return(
-            <div>
-                <h2>Products</h2>
-                <Product />
-            </div>
+            <ul className="productsList">
+                {this.props.products.map((product,index)=><li key={index}><Product 
+                id={product.id} 
+                name={product.name}
+                price={product.text}
+                imageUrl={product.imageUrl} /></li>
+                )}
+            </ul>
         )
     }
 }

@@ -4,7 +4,6 @@ import Login from './Login';
 import SignUp from './SignUp';
 class Modal extends React.Component{
     render() {
-        console.log(this.props.view);
         return(
             <div className="modalWrapper"
                 style={{
