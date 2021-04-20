@@ -49,20 +49,37 @@
 
 .productsList > li{
   width: 22vw;
-  max-width: 200px;
+  min-width: 210px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  margin: 10px;
+  margin: 15px;
 }
 
 .product{
-  width: 90%;
-  height: 90%;
-  padding: 10px;
+  width: 80%;
+  height: 80%;
+  border-radius: 10px;
+  text-align: center;
 }
 
+.productName{
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.product:hover{
+  border: 2px solid rgba(0, 0, 0, 0.274);
+}
+
+.product:active{
+  border: 3px solid black;
+}
 .productImage{
-  height: 10%;
+  height: 50%;
+  width: 100%;
+  border-radius: 10px;
 }

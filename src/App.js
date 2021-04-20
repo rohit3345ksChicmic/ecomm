@@ -277,7 +277,7 @@ class App extends React.Component {
 
   componentDidMount(){
     let products=[]
-    fetch("https://asos2.p.rapidapi.com/products/v2/list?offset=0&categoryId=1930&limit=50&store=US&country=US&currency=USD&sort=freshness&lang=en-US&sizeSchema=US", {
+    fetch("https://asos2.p.rapidapi.com/products/v2/list?offset=0&categoryId=8199&limit=50&store=US&country=US&currency=USD&sort=freshness&lang=en-US&sizeSchema=US", {
       "method": "GET",
       "headers": {
         "x-rapidapi-key": "412f4e8868mshfce7a47c092f508p1b67dfjsncfe1239e3622",
