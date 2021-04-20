@@ -4,7 +4,6 @@ function Product(props){
             <img className="productImage" src={"http://"+props.imageUrl} alt={props.name} />
             <p className="productName">{props.name}</p>
             <span className="productPrice">{props.price}</span>
-            
         </div>
     )
 }

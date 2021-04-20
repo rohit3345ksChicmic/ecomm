@@ -8,7 +8,7 @@ class Products extends React.Component {
     render() {
         return(
             <ul className="productsList">
-                {this.props.products.map((product,index)=><li key={index}><Product 
+                {this.props.products.map((product,index)=><li onClick={(event)=>{this.props.productClick(event,product.id)}} key={index}><Product 
                 id={product.id} 
                 name={product.name}
                 price={product.text}

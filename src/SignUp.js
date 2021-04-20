@@ -6,46 +6,55 @@ class SignUp extends React.Component {
         return(
             <div className="formContainer">
                 <div className="leftPane">
-                    Sign Up
+                <div>Sign Up
+                    <div className="leftPaneDesc">
+                        Sign Up with your details to get started.
+                    </div>
                 </div>
-                <form className="formBox signUpForm" onSubmit={this.props.handleSubmit}>
+                    <div>
+                        <img src="/modalLeftPane.png" alt="Login / SignUp" />
+                    </div>
+                </div>
+                <div className="rightPane">
+                    <form className="formBox signUpForm" onSubmit={this.props.handleSubmit}>
                     
                     
                     <label className="inputContainer">
-                        <span className="label"> Username: </span>
                         <input autoComplete="off" placeholder="User Name*" name="userName" type="text" value={this.props.userName} onChange={this.props.handleChange} /> 
+                        <span className="error">{this.props.errorMessages['userName']}</span>
                     </label>
-                    <span className="error">{this.props.errorMessages['userName']}</span>
+                    
                     
                     
                     <label className="inputContainer">
-                        <span className="label">Email:  </span>
                         <input autoComplete="off" placeholder="Email Address*" name="email" type="email" value={this.props.email} onChange={this.props.handleChange} />                     
+                        <span className="error">{this.props.errorMessages['email']}</span>
                     </label>
 
-                    <span className="error">{this.props.errorMessages['email']}</span>
+                    
                     
 
 
                     
                     <label className="inputContainer">
-                        <span className="label">Password:  </span>
                         <input autoComplete="off" placeholder="Password*" name="pw" type="password" value={this.props.pw} onChange={this.props.handleChange} />
+                        <span className="error">{this.props.errorMessages['pw']}</span>
                     </label>
 
-                    <span className="error">{this.props.errorMessages['pw']}</span>
                     
                     
                     
-                    <label className="inputContainer">
-                        <span className="label">Confirm Password:  </span>
+                    
+                    <label className="inputContainer" id="confirmPw">
                         <input autoComplete="off" placeholder="Re-Enter Password" name="confirmPw" type="password" value={this.props.confirmPw} onChange={this.props.handleChange} />    
+                        <span className="error">{this.props.errorMessages['confirmPw']}</span>
                     </label>
-                    <span className="error">{this.props.errorMessages['confirmPw']}</span>
+                    
 
-                    <input className="btn signUp" type="submit" value="Sign Up" />
-                    <button onClick={this.props.changeForm}> Existing User? Log In </button>
+                    <input className="btn-large signUp" type="submit" value="Sign Up" />
+                    <button className="btn-large toLogin" onClick={this.props.changeForm}> Existing User? Login </button>
                 </form>
+                </div>
             </div>
         )
     }

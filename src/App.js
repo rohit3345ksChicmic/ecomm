@@ -40,6 +40,7 @@ class App extends React.Component {
     this.validateForm=this.validateForm.bind(this);
     this.validateIndividialInputs=this.validateIndividialInputs.bind(this);
     this.setErrorMessages=this.setErrorMessages.bind(this);
+    this.productClick=this.productClick.bind(this);
   }
 
   setErrorMessages(errorMessages) {
@@ -176,7 +177,11 @@ class App extends React.Component {
 
   changeForm(){
     this.setState((state)=>({
-      isLoggingIn: !state.isLoggingIn
+      isLoggingIn: !state.isLoggingIn,
+      userName: "",
+      email: "",
+      pw: "",
+      confirmPw: ""
     }));
   }
 
@@ -194,6 +199,10 @@ class App extends React.Component {
     }));
   }
 
+  productClick(event,productId){
+    console.log(productId);
+  }
+
 
   handleLogin(event) {
     event.preventDefault();
@@ -209,6 +218,8 @@ class App extends React.Component {
         console.log(`User Authentication: ${isAuthenticated?"Successful":"Unsuccessful"}`);  
         this.setState(()=>({
           isLoggedIn: true,
+          email: "",
+          pw: "",
           currentUser: existing_users_data[currentUserIndex],
           viewModal: false
         }),()=>{
@@ -309,19 +320,19 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="navbar">
-          <div>
-            {/* Image */}
+          <div className="logo">
+            <img src="/flipkart-logo.png" alt="Flipkart" />
           </div>
-          <div>
-            {/* Search bar */}
+          <div className="searchBarContainer">
+            <input type="text" placeholder="Search Products..." className="searchBar" />
           </div>
-          <div>
+          <div className="userContainer">
             {/* Login / UserName */}
-            {this.state.isLoggedIn ? this.state.currentUser.userName  : <button onClick={this.showModal}>Log In</button>}
+            {this.state.isLoggedIn ? this.state.currentUser.userName  : <button className="btn-small" onClick={this.showModal}>Login</button>}
           </div>
           <div>
             {/* Logout */}
-            {this.state.isLoggedIn ? <button onClick={this.handleLogOut}> Logout </button> : null}
+            {this.state.isLoggedIn ? <button className="btn-small" onClick={this.handleLogOut}> Logout </button> : null}
           </div>
           <div>
             {/* Cart */}
@@ -329,7 +340,7 @@ class App extends React.Component {
         </header>
         <section>
           {/* Product Listing */}
-          <Products products={this.state.products} />
+          <Products productClick={this.productClick} products={this.state.products} />
         </section>
         {this.state.viewModal? <div className="backDrop" onClick={this.hideModal}></div> : null}
           {/* Backdrop */}
