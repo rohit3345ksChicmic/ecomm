@@ -8,10 +8,10 @@ class Products extends React.Component {
     render() {
         return(
             <ul className="productsList">
-                {this.props.products.map((product,index)=><li onClick={(e)=>this.props.productClick(e,product)} key={index}><Product 
+                {this.props.products.map((product,index)=><li onClick={(e)=>this.props.productClick(product,e)} key={index}><Product 
                 id={product.id} 
                 name={product.name}
-                price={product.text}
+                price={product.value}
                 imageUrl={product.imageUrl} /></li>
                 )}
             </ul>

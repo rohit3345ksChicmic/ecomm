@@ -4,7 +4,7 @@ function Product(props){
         <div className="product">
             <img className="productImage" src={"http://"+props.imageUrl} alt={props.name} />
             <Link to={`/products/${props.id}`}><p className="productName">{props.name}</p></Link>
-            <span className="productPrice">{props.price}</span>
+            <span className="productPrice">{`$${props.price}`}</span>
         </div>
     )
 }
