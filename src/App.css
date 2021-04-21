@@ -7,7 +7,7 @@
 
 .navbar{
   height: 10vh;
-  width: 98.7vw;
+  width: 100%;
   padding: 0 20vw;
   margin: auto;
   display: flex;
@@ -52,7 +52,7 @@
   width: 100%;
   height: 100%;
 }
-.leftPane{
+.formContainer .leftPane{
   width: 35%;
   height: 100%;
   background-color: rgb(40,116,240);
@@ -78,7 +78,7 @@
   color: white;
   text-transform: capitalize;
 }
-.rightPane{
+.formContainer .rightPane{
   width: 60%;
   margin: 0 2.5%;
   padding: 10px;
@@ -123,20 +123,28 @@
   height: 80%;
   border-radius: 10px;
   text-align: center;
+  -webkit-transition: box-shadow 0.3s ease-in-out;
+  -moz-transition: box-shadow 0.3s ease-in-out;
+  -o-transition: box-shadow 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out;
 }
-
-.productName{
+.product > a{
+  text-decoration: none;
+  color: black;
+}
+.product .productName{
   font-size: 1.2rem;
   font-weight: 500;
-  margin: 15px;
+  max-height: 90%;
+  padding: 15px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.productName:hover{
+.product .productName:hover{
   color:rgb(40, 117, 240);
 }
 .product:hover{
-  border: 2px solid rgba(0, 0, 0, 0.274);
+  box-shadow: 0 3px 16px 0 rgb(0 0 0 / 11%);
 }
 
 .product:active{
