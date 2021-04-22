@@ -1,16 +1,16 @@
 import "./ProductDetail.css";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-// var productDetails = {
-//   id: 23436741,
-//   name: "Timex chronograph watch with silver dial",
-//   description:
-//     'Watch by <a href="/Men/A-To-Z-Of-Brands/Timex/Cat/pgecategory.aspx?cid=4559"><strong>Timex</strong></a><ul>    <li>Something for your wrist</li><li>Model number: TW2R97900</li>    <li>Mesh strap </li>    <li>Stainless steel bezel</li>    <li>Branded dial</li>    <li>Dash markers</li>    <li>Date window </li><li>Backlight feature for visibility in low-light conditions</li>    <li>Chronograph feature</li>    <li>Analogue quartz movement</li>    <li>Folding clasp</li><li>3ATM – water resistant to 30 metres (100 feet)</li><li>Splash and rain-resistant </li>    <li>Two years manufacturer warranty </li>    <li>Comes in a branded box </li></ul>',
-//   brandName: "Timex",
-//   imageUrl:
-//     "images.asos-media.com/products/timex-chronograph-watch-with-silver-dial/23436741-1-silver",
-//   price: "$99.00",
-// };
+var productDetails = {
+  id: 23436741,
+  name: "Timex chronograph watch with silver dial",
+  description:
+    'Watch by <a href="/Men/A-To-Z-Of-Brands/Timex/Cat/pgecategory.aspx?cid=4559"><strong>Timex</strong></a><ul>    <li>Something for your wrist</li><li>Model number: TW2R97900</li>    <li>Mesh strap </li>    <li>Stainless steel bezel</li>    <li>Branded dial</li>    <li>Dash markers</li>    <li>Date window </li><li>Backlight feature for visibility in low-light conditions</li>    <li>Chronograph feature</li>    <li>Analogue quartz movement</li>    <li>Folding clasp</li><li>3ATM – water resistant to 30 metres (100 feet)</li><li>Splash and rain-resistant </li>    <li>Two years manufacturer warranty </li>    <li>Comes in a branded box </li></ul>',
+  brandName: "Timex",
+  imageUrl:
+    "images.asos-media.com/products/timex-chronograph-watch-with-silver-dial/23436741-1-silver",
+  price: "$99.00",
+};
 const ProductDetail = (props) => {
   const [product, setProduct] = useState({});
   let { productId } = useParams();
@@ -23,7 +23,7 @@ const ProductDetail = (props) => {
         method: "GET",
         headers: {
           "x-rapidapi-key":
-            "a964fd8b5amsh4c7be91c6ef5c16p17bd97jsnafbfe8ea832c",
+            "9b4394ee82mshf475d552353b7bfp1f8fa5jsn012efe703d93",
           "x-rapidapi-host": "asos2.p.rapidapi.com",
         },
       }
@@ -53,10 +53,11 @@ const ProductDetail = (props) => {
         props.productClick(productDetails);
       })
       .catch((err) => {
+        setProduct(productDetails);
         console.error(err);
       });
-    //  setProduct(productDetails);
-  }, []);
+    
+  }, [productId]);
   return (
     <div className="productContainer">
       <div className="leftPane">

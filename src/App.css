@@ -18,18 +18,21 @@
 
 .logo {
   width: 6vw;
-  height: 35%;
+  height: 100%;
 }
 .logo > img {
   width: 90%;
-  height: 100%;
+  height: 35%;
+  margin: 10% 0 0;
 }
 
 .searchBarContainer{
   height: 61%;
+  width: 38vw;
+  margin-left: 10vw;
 }
 .searchBar{
-  width: 35vw;
+  width: 100%;
   height: 100%;
   border-radius: 5px;
   border: none;
@@ -76,6 +79,7 @@
 .userContainer{
   font-size: 1.2rem;
   color: white;
+  width: 23vw;
 }
 
 .loggedin{
@@ -237,4 +241,48 @@
 .userContainer .cart a{
   text-decoration: none;
   color: white;
+}
+
+
+.searchResultsContainer{
+  background-color: white;
+  box-shadow: 0 3px 16px 0 rgb(0 0 0 / 11%);
+  position: absolute;
+  top: 9vh;
+  left: 27vw;
+  border-radius: 8px;
+  width: 38vw;
+}
+.searchResultsContainer .searchResultsList{
+  list-style: none;
+}
+.searchResultsList li{
+  cursor: pointer;
+}
+.searchedProduct{
+  height: 8vh;
+  display: flex;
+  line-height: 8vh;
+  margin: 5px 0 5px 0;
+}
+.searchResultsList a{
+  text-decoration: none;
+  color: black;
+}
+.searchedProduct:hover{
+  background-color: lightgray;
+}
+.searchedProduct .imageContainer{
+  width: 16%;
+  height: 100%;
+}
+
+.searchedProduct .imageContainer img{
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.searchedProduct .searchResultTitle{
+  padding-left: 20px;
 }

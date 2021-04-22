@@ -31,7 +31,6 @@ function Cart(props){
     
 
     const decreaseQuantity=(cartItemIndex,e=null)=>{
-        console.log("decreaseQuantity is running");
         let tempCartItems=JSON.parse(JSON.stringify(cartItems));
         tempCartItems[cartItemIndex].quantity-=1;
         if(tempCartItems[cartItemIndex].quantity===1) {
@@ -58,10 +57,10 @@ function Cart(props){
                 increaseQuantity={increaseQuantity}
                 cartItem={cartItem} /></li>
             )}
-            <div className="cartSummary">
-                Number of Products: <span>{cartItems.length}</span>&nbsp;&nbsp;&nbsp;
-                Grand Total: {"$"+grandTotal}
-            </div>
+            {cartItems.length ? <div className="cartSummary">
+                <div>Number of Products: <span>{cartItems.length}</span></div>
+                <div>Grand Total: {"$"+grandTotal}</div>
+            </div> : null}
         </div>
     )
 }
