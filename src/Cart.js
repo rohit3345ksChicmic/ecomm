@@ -36,6 +36,9 @@ function Cart(props){
         if(tempCartItems[cartItemIndex].quantity===1) {
             document.getElementById(cartItemIndex.toString()).classList.add("greyedOut");    
         }
+        let tempCarts=JSON.parse(localStorage.carts);
+        tempCarts[props.currentUser.email]=tempCartItems;
+        localStorage.setItem("carts",JSON.stringify(tempCarts));
         setCartItems(tempCartItems);
         setGrandTotal(findGrandTotal(tempCartItems));
     }
@@ -45,6 +48,9 @@ function Cart(props){
         document.getElementById(cartItemIndex.toString()).classList.remove("greyedOut");
         let tempCartItems=JSON.parse(JSON.stringify(cartItems));
         tempCartItems[cartItemIndex].quantity+=1;
+        let tempCarts=JSON.parse(localStorage.carts);
+        tempCarts[props.currentUser.email]=tempCartItems;
+        localStorage.setItem("carts",JSON.stringify(tempCarts));
         setCartItems(tempCartItems);
         setGrandTotal(findGrandTotal(tempCartItems));
     }
