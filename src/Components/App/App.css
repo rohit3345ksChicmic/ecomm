@@ -27,7 +27,7 @@
 }
 
 .searchBarContainer{
-  height: 61%;
+  height: 6vh;
   width: 38vw;
   margin-left: 10vw;
 }
@@ -80,6 +80,16 @@
   font-size: 1.2rem;
   color: white;
   width: 23vw;
+}
+
+.userContainer .cart .cartBadge{
+  background-color: rgba(255, 72, 0, 0.842);
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 1.2%;
 }
 
 .loggedin{
@@ -286,3 +296,4 @@
 .searchedProduct .searchResultTitle{
   padding-left: 20px;
 }
+
