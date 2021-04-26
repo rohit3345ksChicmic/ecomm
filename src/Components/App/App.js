@@ -101,6 +101,7 @@ class App extends React.Component {
       this.setState({
         cartItems: tempCartItems,
       },()=>{
+        this.setGrandTotal();
         this.props.history.push("/cart");
       });
     } else {
@@ -620,7 +621,7 @@ class App extends React.Component {
         this.setState(() => ({
           products,
         }));
-        throw err;
+        console.error(err);
       });
 
     if (
@@ -680,7 +681,31 @@ class App extends React.Component {
             <Navbar /></CartContextProvider>
           </SearchContextProvider>
           <Switch>
-          <Route path="/cart">
+          
+            
+              <Route exact path="/">
+              <ProductContextProvider
+              value={{
+                products: this.state.products,
+                productClick: this.productClick,
+              }}
+            >
+                <section>
+                  {/* Product Listing */}
+                  <Products />
+                </section>
+                </ProductContextProvider>
+              </Route>
+
+              <Route path="/products/:productId">
+                <ProductContextProvider value={{
+                  selectedProduct: this.state.selectedProduct,
+                  addToCart: this.addToCart
+                }}>
+                <ProductDetail />
+                </ProductContextProvider>
+              </Route>
+              <Route path="/cart">
               <CartContextProvider
                 value={{
                   cartItems: this.state.cartItems,
@@ -693,32 +718,6 @@ class App extends React.Component {
                 <Cart />
               </CartContextProvider>
             </Route>
-            <ProductContextProvider
-              value={{
-                products: this.state.products,
-                selectedProduct: this.state.selectedProduct,
-                productClick: this.productClick,
-                addToCart: this.addToCart,
-              }}
-            >
-              <Route exact path="/">
-                <section>
-                  {/* Product Listing */}
-                  <Products
-                    productClick={this.productClick}
-                    products={this.state.products}
-                  />
-                </section>
-              </Route>
-
-              <Route path="/products/:productId">
-                <ProductDetail
-                  productClick={this.productClick}
-                  addToCart={this.addToCart}
-                />
-              </Route>
-            </ProductContextProvider>
-            
           </Switch>
 
           {this.state.viewModal ? (
