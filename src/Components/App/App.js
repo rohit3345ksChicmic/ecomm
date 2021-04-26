@@ -75,6 +75,7 @@ class App extends React.Component {
     this.increaseQuantity = this.increaseQuantity.bind(this);
     this.setGrandTotal = this.setGrandTotal.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
+    this.generateUserID=this.generateUserID.bind(this);
   }
   setErrorMessages(errorMessages) {
     this.setState(() => ({
@@ -82,6 +83,8 @@ class App extends React.Component {
     }));
   }
 
+
+    
   addToCart() {
     if (this.state.isLoggedIn) {
       let tempCarts = JSON.parse(localStorage.carts); //Whole Information
@@ -319,7 +322,8 @@ class App extends React.Component {
   }
 
   handleLogOut() {
-    localStorage.setItem("currentUser", "");
+    localStorage.removeItem("currentUser");
+    console.log("handleLogOut is working",localStorage.currentUser);
     this.setState(() => ({
       isLoggedIn: false,
     }));
@@ -441,10 +445,22 @@ class App extends React.Component {
     this.state.cartItems.forEach((item) => {
       sum += item.quantity * item.price;
     });
+    sum=sum.toFixed(2);
     this.setState(() => ({
       cartGrandTotal: sum,
     }));
   }
+
+
+  generateUserID(length = 32) {
+    let charactersArr=['0', '1', '2', '3', '4', '5', '6', '7', '8','9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q','R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i','j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r','s', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    let userID = "";
+    for (let i = 0; i < 32; i++) {
+        userID += charactersArr[Math.floor(Math.random() * charactersArr.length)];
+    }
+    return userID;
+    }
+
 
   handleSignUp(event) {
     event.preventDefault();
@@ -485,7 +501,7 @@ class App extends React.Component {
             return;
           }
           let user = {
-            userID: JSON.parse(localStorage.users).length || 0,
+            userID: this.generateUserID(),
             userName: this.state.userName,
             email: this.state.email,
             pw: this.state.pw,
@@ -718,7 +734,6 @@ class App extends React.Component {
               </CartContextProvider>
             </Route>
           </Switch>
-
           {this.state.viewModal ? (
             <div className="backDrop" onClick={this.changeModalView}></div>
           ) : null}

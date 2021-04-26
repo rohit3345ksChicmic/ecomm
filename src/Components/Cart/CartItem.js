@@ -39,7 +39,7 @@ function CartItem({ index, cartItem }) {
                 <p className="productBrandName">{cartItem.brandName}</p>
               </div>
               <p className="productPrice">
-                {"$" + cartItem.price * cartItem.quantity}
+                {"$" + (cartItem.price * cartItem.quantity).toFixed(2)}
               </p>
               <p
                 onClick={(e) => deleteFromCart(cartItem, e)}

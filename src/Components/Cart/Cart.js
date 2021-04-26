@@ -3,10 +3,7 @@ import CartItem from "./CartItem";
 import { withRouter } from "react-router-dom";
 import { CartContextConsumer } from "../../Contexts/CartContext";
 function Cart(props) {
-  if (
-    localStorage.currentUser === undefined ||
-    localStorage.currentUser === ""
-  ) {
+  if (localStorage.currentUser === undefined) {
     props.history.push("/");
   }
   return (
