@@ -713,8 +713,7 @@ class App extends React.Component {
                   increaseQuantity: this.increaseQuantity,
                   decreaseQuantity: this.decreaseQuantity,
                   deleteFromCart: this.deleteFromCart,
-                }}
-              >
+                }}>
                 <Cart />
               </CartContextProvider>
             </Route>
