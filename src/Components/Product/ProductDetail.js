@@ -1,59 +1,17 @@
 import "./ProductDetail.css";
 import { ProductContextConsumer } from "../../Contexts/ProductContext";
 import Button from "../Button/Button";
-// import { useParams } from "react-router-dom";
-// import { useState, useEffect } from "react";
+import { useParams,withRouter } from "react-router-dom";
 
 const ProductDetail = (props) => {
-  // const [product, setProduct] = useState({});
-  // let { productId } = useParams();
-  // useEffect(() => {
-  //   fetch(
-  //     "https://asos2.p.rapidapi.com/products/v3/detail?id=" +
-  //       productId +
-  //       "&store=US&sizeSchema=US&lang=en-US&currency=USD",
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "x-rapidapi-key":
-  //           "9b4394ee82mshf475d552353b7bfp1f8fa5jsn012efe703d93",
-  //         "x-rapidapi-host": "asos2.p.rapidapi.com",
-  //       },
-  //     }
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       let {
-  //         id,
-  //         name,
-  //         description,
-  //         price: {
-  //           current: { value },
-  //         },
-  //       } = data;
-  //       let brandName = data.brand.name;
-  //       let imageUrl = data.media.images[0].url;
-  //       let price = value;
-  //       let productDetails = {
-  //         id,
-  //         name,
-  //         description,
-  //         brandName,
-  //         imageUrl,
-  //         price,
-  //       };
-  //       setProduct(productDetails);
-  //       props.productClick(productDetails);
-  //     })
-  //     .catch((err) => {
-  //       setProduct(productDetails);
-  //       console.error(err);
-  //     });
-
-  // }, [productId]);
+  let { productId } = useParams();
   return (
     <ProductContextConsumer>
-      {({selectedProduct,addToCart}) => {
+      {({selectedProduct,addToCart,productClick}) => {
+        if(JSON.stringify(selectedProduct)===JSON.stringify({})) {
+          productClick(productId);
+        }
+        
         return (
           <div className="productContainer">
             <div className="leftPane">
@@ -67,14 +25,16 @@ const ProductDetail = (props) => {
                     <img src="/buyNow.svg" alt="Buy Now" />
                     Buy Now
                   </Button>
-                  <Button class="btn addToCart" click={addToCart}>
+                  <Button class="btn addToCart" click={selectedProduct.isInCart ? ()=>{
+                    props.history.push('/cart');
+                  }:addToCart}>
                     <img
                       src="/shopping-cart-solid.svg"
                       width="16"
                       height="16"
                       alt="Shopping Cart"
                     />
-                    Add to Cart
+                    {selectedProduct.isInCart? " Go to Cart " : " Add to Cart"}
                   </Button>
                 </div>
               )}
@@ -107,4 +67,4 @@ const ProductDetail = (props) => {
   );
 };
 
-export default ProductDetail;
+export default withRouter(ProductDetail);

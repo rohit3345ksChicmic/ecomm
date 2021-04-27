@@ -88,13 +88,6 @@ class App extends React.Component {
       let tempCarts = JSON.parse(localStorage.carts); //Whole Information
       let tempCartItems = tempCarts[this.state.currentUser.email]; //Current User's Cart
       let tempSelectedProduct = JSON.parse(JSON.stringify(this.state.selectedProduct)); //SelectedProduct to be added to Cart
-      let isAlreadyInCart = tempCartItems.some(
-        (cartItem) => cartItem.id === tempSelectedProduct.id
-      );
-      if (isAlreadyInCart) {
-        alert("Product Already in Cart");
-        return;
-      }
       tempSelectedProduct.quantity = 1; //Setting Initial Quantity to 1
       tempCartItems.push(tempSelectedProduct);
       tempCarts[this.state.currentUser.email] = tempCartItems;
@@ -286,13 +279,20 @@ class App extends React.Component {
         let brandName = data.brand.name;
         let imageUrl = data.media.images[0].url;
         let price = value;
+        let isInCart=false;
+        if(this.state.cartItems.length) {
+          if(this.state.cartItems.some((cartItem)=>cartItem.id===id)){
+            isInCart=true;
+          }
+        }
         let tempSelectedProduct = {
           id,
           name,
           description,
           brandName,
           imageUrl,
-          price
+          price,
+          isInCart
         };
         this.setState(()=>({
           selectedProduct: tempSelectedProduct
@@ -487,7 +487,7 @@ class App extends React.Component {
           if (localStorage.users !== undefined) {
             let existing_users_data = JSON.parse(localStorage.users);
             isAlreadyRegistered = existing_users_data.some(
-              (user) => user.userName === this.state.userName
+              (user) => user.email === this.state.email
             );
           }
           if (isAlreadyRegistered) {
@@ -564,13 +564,20 @@ class App extends React.Component {
         let brandName = data.brand.name;
         let imageUrl = data.media.images[0].url;
         let price = value;
+        let isInCart=false;
+        if(this.state.cartItems.length) {
+          if(this.state.cartItems.some((cartItem)=>cartItem.id===id)){
+            isInCart=true;
+          }
+        }
         let tempSelectedProduct = {
           id,
           name,
           description,
           brandName,
           imageUrl,
-          price
+          price,
+          isInCart
         };
         this.setState(()=>({
           searchQuery: "",
@@ -714,11 +721,14 @@ class App extends React.Component {
               <Route path="/products/:productId">
                 <ProductContextProvider value={{
                   selectedProduct: this.state.selectedProduct,
+                  productClick: this.productClick,
                   addToCart: this.addToCart
                 }}>
                 <ProductDetail />
                 </ProductContextProvider>
               </Route>
+
+
               <Route path="/cart">
               <CartContextProvider
                 value={{
