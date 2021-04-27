@@ -56,34 +56,17 @@ class App extends React.Component {
       },
       currentUser: {},
     };
-    this.changeModalView = this.changeModalView.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.changeForm = this.changeForm.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogOut = this.handleLogOut.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
-    this.validateForm = this.validateForm.bind(this);
-    this.validateIndividialInputs = this.validateIndividialInputs.bind(this);
-    this.setErrorMessages = this.setErrorMessages.bind(this);
-    this.productClick = this.productClick.bind(this);
-    this.addToCart = this.addToCart.bind(this);
-    this.searchItemClick = this.searchItemClick.bind(this);
-    this.searchProducts = this.searchProducts.bind(this);
-    this.decreaseQuantity = this.decreaseQuantity.bind(this);
-    this.increaseQuantity = this.increaseQuantity.bind(this);
-    this.setGrandTotal = this.setGrandTotal.bind(this);
-    this.deleteFromCart = this.deleteFromCart.bind(this);
-    this.generateUserID=this.generateUserID.bind(this);
   }
-  setErrorMessages(errorMessages) {
+
+
+  setErrorMessages=(errorMessages) =>{
     this.setState(() => ({
       errorMessages,
     }));
   }
 
-
     
-  addToCart() {
+  addToCart=()=> {
     if (this.state.isLoggedIn) {
       let tempCarts = JSON.parse(localStorage.carts); //Whole Information
       let tempCartItems = tempCarts[this.state.currentUser.email]; //Current User's Cart
@@ -111,7 +94,7 @@ class App extends React.Component {
     }
   }
 
-  searchProducts(e) {
+  searchProducts=(e)=> {
     let trimmedSearchQuery = e.target.value;
     trimmedSearchQuery = trimmedSearchQuery.trimStart();
     this.setState(
@@ -142,7 +125,7 @@ class App extends React.Component {
     );
   }
 
-  validateIndividialInputs(tempErrorMessages, Regex, inputField) {
+  validateIndividialInputs=(tempErrorMessages, Regex, inputField)=> {
     if (!Regex.test(this.state[inputField])) {
       this.setErrorMessages(tempErrorMessages);
     } else {
@@ -151,7 +134,7 @@ class App extends React.Component {
     }
   }
 
-  validateForm(inputField) {
+  validateForm=(inputField)=> {
     if (!this.state.isLoggingIn) {
       let tempErrorMessages = JSON.parse(
         JSON.stringify(this.state.errorMessages)
@@ -252,7 +235,7 @@ class App extends React.Component {
     }
   }
 
-  productClick(productId, event = null) {
+  productClick=(productId, event = null)=> {
     fetch(
       "https://asos2.p.rapidapi.com/products/v3/detail?id=" +
         productId +
@@ -306,7 +289,7 @@ class App extends React.Component {
       });
   }
 
-  handleChange(event) {
+  handleChange=(event)=> {
     this.setState(
       {
         [event.target.name]: event.target.value,
@@ -319,7 +302,7 @@ class App extends React.Component {
     );
   }
 
-  handleLogOut() {
+  handleLogOut=() =>{
     localStorage.removeItem("currentUser");
     console.log("handleLogOut is working",localStorage.currentUser);
     this.setState(() => ({
@@ -328,7 +311,7 @@ class App extends React.Component {
     this.props.history.push("/");
   }
 
-  changeForm() {
+  changeForm=()=> {
     this.setState((state) => ({
       isLoggingIn: !state.isLoggingIn,
       userName: "",
@@ -338,13 +321,13 @@ class App extends React.Component {
     }));
   }
 
-  changeModalView() {
+  changeModalView=()=> {
     this.setState((state) => ({
       viewModal: !state.viewModal,
     }));
   }
 
-  handleLogin(event) {
+  handleLogin=(event)=> {
     event.preventDefault();
     let existing_users_data = JSON.parse(localStorage.users);
     let currentUserIndex = Number.MIN_VALUE;
@@ -420,7 +403,7 @@ class App extends React.Component {
     );
   };
 
-  deleteFromCart(product, event = null) {
+  deleteFromCart=(product, event = null)=> {
     let tempCarts = JSON.parse(localStorage.carts); //Whole Information
     let tempCartItems = tempCarts[this.state.currentUser.email]; //Current User's Cart
     let filteredCartItems = tempCartItems.filter(
@@ -438,7 +421,7 @@ class App extends React.Component {
     );
   }
 
-  setGrandTotal() {
+  setGrandTotal=()=> {
     let sum = 0;
     this.state.cartItems.forEach((item) => {
       sum += item.quantity * item.price;
@@ -450,7 +433,7 @@ class App extends React.Component {
   }
 
 
-  generateUserID(length = 32) {
+  generateUserID=(length = 32)=> {
     let charactersArr=['0', '1', '2', '3', '4', '5', '6', '7', '8','9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q','R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i','j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r','s', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     let userID = "";
     for (let i = 0; i < 32; i++) {
@@ -460,7 +443,7 @@ class App extends React.Component {
     }
 
 
-  handleSignUp(event) {
+  handleSignUp=(event)=> {
     event.preventDefault();
     if (localStorage.users === undefined)
       localStorage.setItem("users", JSON.stringify([]));
@@ -537,7 +520,7 @@ class App extends React.Component {
     }
   }
 
-  searchItemClick(productId, e = null) {
+  searchItemClick=(productId, e = null)=> {
     fetch(
       "https://asos2.p.rapidapi.com/products/v3/detail?id=" +
         productId +

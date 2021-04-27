@@ -20,6 +20,7 @@
 
 .productContainer .rightPane{
     height: 100%;
+    width: 50%;
 }
 .productContainer .imageContainer{
     width: 100%;
