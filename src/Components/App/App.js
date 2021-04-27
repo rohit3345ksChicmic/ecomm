@@ -66,6 +66,7 @@ class App extends React.Component {
   }
 
     
+  
   addToCart=()=> {
     if (this.state.isLoggedIn) {
       let tempCarts = JSON.parse(localStorage.carts); //Whole Information
