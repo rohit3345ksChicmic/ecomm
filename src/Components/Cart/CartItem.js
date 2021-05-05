@@ -23,7 +23,7 @@ function CartItem({ index, cartItem }) {
                 >
                   -
                 </Button>
-                <Button class="quantity">{cartItem.quantity}</Button>
+                <Button class="quantity" click={()=>{}}>{cartItem.quantity}</Button>
                 <Button
                   click={increaseQuantity}
                   params={[index]}

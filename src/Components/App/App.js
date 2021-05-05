@@ -482,12 +482,14 @@ class App extends React.Component {
             }));
             return;
           }
+          let userID=Symbol("userID");
           let user = {
-            userID: this.generateUserID(),
+            [userID]: this.generateUserID(),
             userName: this.state.userName,
             email: this.state.email,
             pw: this.state.pw,
           };
+          console.log(user[userID]);
           let tempusers = JSON.parse(localStorage.users);
           tempusers.push(user);
           localStorage.setItem("users", JSON.stringify(tempusers));
