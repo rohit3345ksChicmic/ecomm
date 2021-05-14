@@ -1,0 +1,5 @@
+1. Create Initial States
+2. Create reducer
+3. Create store
+4. use it in the frontend using hooks
+5. 

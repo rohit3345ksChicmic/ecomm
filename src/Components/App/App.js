@@ -10,7 +10,8 @@ import { CartContextProvider } from "../../Contexts/CartContext";
 import { SearchContextProvider } from "../../Contexts/SearchContext";
 import { ProductContextProvider } from "../../Contexts/ProductContext";
 import Navbar from "../Navbar/Navbar";
-
+import store from '../../redux/store/store';
+import * as ProductActions from '../../redux/actions/productActions';
 var errorString = {
   userName: "Invalid Username",
   email: "Invalid Email Address",
@@ -648,6 +649,7 @@ class App extends React.Component {
         }
       );
     }
+    store.dispatch(ProductActions.loadProduct());
   }
 
   render() {
@@ -680,7 +682,7 @@ class App extends React.Component {
               searchResults: this.state.searchResults,
               searchProducts: this.searchProducts,
               searchItemClick: this.searchItemClick,
-            }}
+            }}                                                                                                                                                                                              
           >
             <CartContextProvider value={{
               cartItems: this.state.cartItems

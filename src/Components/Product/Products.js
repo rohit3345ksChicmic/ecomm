@@ -6,14 +6,16 @@ class Products extends React.Component {
   // constructor(props) {
   //     super(props);
   // }
+
   render() {
+    
     return (
       <ProductContextConsumer>
         {({ products, productClick }) => {
           return (
             <ul className="productsList">
               {products.map((product, index) => (
-                <li onClick={(e) => productClick(product.id, e)} key={index}>
+                <li data-id={product.id} name={product.id} onClick={(e) => productClick(product.id, e)} key={index}>
                   <Product
                     id={product.id}
                     name={product.name}
