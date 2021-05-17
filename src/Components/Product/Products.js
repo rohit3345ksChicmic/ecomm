@@ -1,21 +1,18 @@
 import React from "react";
 import Product from "./Product";
 import "../App/App.css";
+import {useSelector} from 'react-redux';
 import { ProductContextConsumer } from "../../Contexts/ProductContext";
-class Products extends React.Component {
-  // constructor(props) {
-  //     super(props);
-  // }
-
-  render() {
-    
+function Products() {
+    const productsSelector=(state)=>state.product.products;
+    const products=useSelector(productsSelector);
     return (
       <ProductContextConsumer>
-        {({ products, productClick }) => {
+        {({  productClick }) => {
           return (
             <ul className="productsList">
               {products.map((product, index) => (
-                <li data-id={product.id} name={product.id} onClick={(e) => productClick(product.id, e)} key={index}>
+                <li name={product.id} key={index}>
                   <Product
                     id={product.id}
                     name={product.name}
@@ -29,7 +26,9 @@ class Products extends React.Component {
         }}
       </ProductContextConsumer>
     );
-  }
 }
 
 export default Products;
+
+
+//onClick={(e) => productClick(product.id, e)}

@@ -12,8 +12,7 @@ export default function productReducer(state=initialState,action){
                 ...state,
                 products: action.payload
             }
-
-        case "products/productSelected":
+        case ProductActionTypes.LOADED_SELECTED_PRODUCT:
             return {
                 ...state,
                 selectedProduct: action.payload

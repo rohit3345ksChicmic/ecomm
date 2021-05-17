@@ -1,17 +1,28 @@
 import "./ProductDetail.css";
 import { ProductContextConsumer } from "../../Contexts/ProductContext";
 import Button from "../Button/Button";
-import { useParams,withRouter } from "react-router-dom";
-
+import { useParams, withRouter } from "react-router-dom";
+import { useEffect } from 'react';
+import store from '../../redux/store/store';
+import * as ProductActions from '../../redux/actions/productActions';
+import {useSelector} from 'react-redux';
 const ProductDetail = (props) => {
   let { productId } = useParams();
+  useEffect(() => {
+    console.log("did Mount of ProductDetail running");
+    store.dispatch(ProductActions.loadSelectedProduct(productId));
+  }, [productId]);
+
+  const selectedProductSelector=(state)=>state.product.selectedProduct;
+  const selectedProduct=useSelector(selectedProductSelector);
   return (
     <ProductContextConsumer>
-      {({selectedProduct,addToCart,productClick}) => {
-        if(JSON.stringify(selectedProduct)===JSON.stringify({})) {
-          productClick(productId);
-        }
-        
+      {({ addToCart, productClick }) => {
+        // if(JSON.stringify(selectedProduct)===JSON.stringify({})) {
+        //   console.log("did Mount of ProductDetail running");
+        //   productClick(productId);
+        // }
+
         return (
           <div className="productContainer">
             <div className="leftPane">
@@ -25,16 +36,16 @@ const ProductDetail = (props) => {
                     <img src="/buyNow.svg" alt="Buy Now" />
                     Buy Now
                   </Button>
-                  <Button class="btn addToCart" click={selectedProduct.isInCart ? ()=>{
+                  <Button class="btn addToCart" click={selectedProduct.isInCart ? () => {
                     props.history.push('/cart');
-                  }:addToCart}>
+                  } : addToCart}>
                     <img
                       src="/shopping-cart-solid.svg"
                       width="16"
                       height="16"
                       alt="Shopping Cart"
                     />
-                    {selectedProduct.isInCart? " Go to Cart " : " Add to Cart"}
+                    {selectedProduct.isInCart ? " Go to Cart " : " Add to Cart"}
                   </Button>
                 </div>
               )}

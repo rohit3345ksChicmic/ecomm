@@ -1,3 +1,4 @@
+import * as userActionTypes from '../actionTypes/userActionTypes';
 export default function userReducer(state={
     users: [],
     currentUser: {},
@@ -9,13 +10,13 @@ export default function userReducer(state={
                 ...state,
                 users: [...state.users,action.payload]
             }
-        case "users/loggedIn":
+        case userActionTypes.USER_LOGGED_IN:
             return {
                 ...state,
                 currentUser: action.payload,
                 isLoggedIn: true
             }
-        case "users/loggedOut":
+        case userActionTypes.USER_LOGGED_OUT:
             return {
                 ...state,
                 currentUser: {},

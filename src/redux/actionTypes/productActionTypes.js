@@ -1,2 +1,4 @@
-export const LOAD_PRODUCT='products/productsLoad';
-export const LOADED_PRODUCT='products/productsLoaded';
+export const LOAD_PRODUCT='LOAD_PRODUCT';
+export const LOADED_PRODUCT='LOADED_PRODUCT';
+export const LOAD_SELECTED_PRODUCT='LOAD_SELECTED_PRODUCT';
+export const LOADED_SELECTED_PRODUCT='LOADED_SELECTED_PRODUCT';
