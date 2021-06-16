@@ -11,6 +11,7 @@ import { SearchContextProvider } from "../../Contexts/SearchContext";
 import { ProductContextProvider } from "../../Contexts/ProductContext";
 import Navbar from "../Navbar/Navbar";
 
+if(localStorage.users===undefined) localStorage.setItem("users",JSON.stringify([]));
 var errorString = {
   userName: "Invalid Username",
   email: "Invalid Email Address",
@@ -339,7 +340,7 @@ class App extends React.Component {
         user.pw === event.target.pw.value
       );
     });
-    if (isAuthenticated) {
+    if (isAuthenticated && existing_users_data.length) {
       localStorage.setItem(
         "currentUser",
         JSON.stringify(existing_users_data[currentUserIndex])
