@@ -9,11 +9,14 @@ class Products extends React.Component {
   render() {
     return (
       <ProductContextConsumer>
-        {({ products, productClick }) => {
+        {({ products, productClick, clearSelectedProduct }) => {
           return (
             <ul className="productsList">
               {products.map((product, index) => (
-                <li onClick={(e) => productClick(product.id, e)} key={index}>
+                <li onClick={(e) => {
+                  productClick(product.id, e);
+                  clearSelectedProduct();
+                }} key={index}>
                   <Product
                     id={product.id}
                     name={product.name}

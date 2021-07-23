@@ -696,11 +696,16 @@ class App extends React.Component {
               value={{
                 products: this.state.products,
                 productClick: this.productClick,
+                clearSelectedProduct: ()=>{
+                  this.setState(()=>({
+                    selectedProduct: {}
+                  }));
+                }
               }}
             >
-                <section>
+                <section className="main_sec">
                   {/* Product Listing */}
-                  <Products />
+                  {this.state.products.length ? <Products /> : <img src="/loader.gif" alt="Loader" className="loader" />}
                 </section>
                 </ProductContextProvider>
               </Route>

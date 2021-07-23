@@ -7,9 +7,10 @@
 .productContainer{
     width: 80%;
     margin: 5vh auto 0;
-    height: 75vh;
+    min-height: 75vh;
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 .productContainer .leftPane{

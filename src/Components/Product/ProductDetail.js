@@ -14,12 +14,12 @@ const ProductDetail = (props) => {
         
         return (
           <div className="productContainer">
-            <div className="leftPane">
+            {JSON.stringify(selectedProduct) === JSON.stringify({}) ? <img src="/loader.gif" alt="loader" className="loader" /> :<><div className="leftPane">
               {/* Image and Buy Now, Add to Cart button */}
               <div className="imageContainer">
                 <img src={`http://${selectedProduct.imageUrl}`} alt={selectedProduct.name} />
               </div>
-              {JSON.stringify(selectedProduct) === JSON.stringify({}) ? null : (
+              {JSON.stringify(selectedProduct) === JSON.stringify({}) ? <img className="loader" src="/loader.gif" alt="Loader" /> : (
                 <div className="btnContainer">
                   <Button class="btn buyNow">
                     <img src="/buyNow.svg" alt="Buy Now" />
@@ -60,6 +60,7 @@ const ProductDetail = (props) => {
                 </div>
               </div>
             </div>
+            </>}
           </div>
         );
       }}
