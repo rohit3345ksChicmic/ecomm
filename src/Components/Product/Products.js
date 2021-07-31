@@ -4,8 +4,7 @@ import "../App/App.css";
 import {useSelector} from 'react-redux';
 import { ProductContextConsumer } from "../../Contexts/ProductContext";
 function Products() {
-    const productsSelector=(state)=>state.product.products;
-    const products=useSelector(productsSelector);
+    const products=useSelector(state=>state.product.products);
     return (
       <ProductContextConsumer>
         {({  productClick }) => {

@@ -1,4 +1,4 @@
-import {CART_LOADED} from '../actionTypes/cartActionTypes';
+import {CART_LOADED} from '../ActionTypes/cart';
 export default function cartReducer(state=[],action){
     switch(action.type){
         case CART_LOADED: 

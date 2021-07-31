@@ -1,4 +1,4 @@
-import * as userActionTypes from '../actionTypes/userActionTypes';
+import * as userActionTypes from '../ActionTypes/user';
 
 export const logUserIn=(currentUser)=>({
     type: userActionTypes.USER_LOGGED_IN,

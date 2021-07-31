@@ -1,6 +1,7 @@
 import CartReducer from './cartReducer';
 import ProductReducer from './productReducer';
 import UserReducer from './userReducer';
+import commonReducer from './commonReducer';
 import {combineReducers} from 'redux';
 
 // const initialStore={
@@ -14,13 +15,17 @@ import {combineReducers} from 'redux';
 //         users: [],
 //         isLoggedIn: false
 //     }
+//     common: {
+//         laoding: false
+//     }
 // }
 
 
 const RootReducer=combineReducers({
     cart: CartReducer,
     product: ProductReducer,
-    user: UserReducer
+    user: UserReducer,
+    common: commonReducer
 });
 
 export default RootReducer;

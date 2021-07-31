@@ -1,4 +1,4 @@
-import * as userActionTypes from '../actionTypes/userActionTypes';
+import * as userActionTypes from '../ActionTypes/user';
 export default function userReducer(state={
     users: [],
     currentUser: {},

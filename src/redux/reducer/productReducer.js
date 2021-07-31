@@ -1,4 +1,4 @@
-import * as ProductActionTypes from '../actionTypes/productActionTypes';
+import { SET_PRODUCTS, SET_PRODUCT } from "../ActionTypes";
 
 const initialState={
     products: [],
@@ -7,12 +7,12 @@ const initialState={
 export default function productReducer(state=initialState,action){
     
     switch(action.type){
-        case ProductActionTypes.LOADED_PRODUCT:
+        case SET_PRODUCTS:
             return {
                 ...state,
                 products: action.payload
             }
-        case ProductActionTypes.LOADED_SELECTED_PRODUCT:
+        case SET_PRODUCT:
             return {
                 ...state,
                 selectedProduct: action.payload

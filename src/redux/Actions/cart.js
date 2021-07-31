@@ -1,4 +1,4 @@
-import {CART_LOADED} from '../actionTypes/cartActionTypes';
+import {CART_LOADED} from '../ActionTypes/cart';
 
 export const loadCart=(cartItems)=>({
     type: CART_LOADED,

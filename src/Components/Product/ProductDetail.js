@@ -3,18 +3,19 @@ import { ProductContextConsumer } from "../../Contexts/ProductContext";
 import Button from "../Button/Button";
 import { useParams, withRouter } from "react-router-dom";
 import { useEffect } from 'react';
-import store from '../../redux/store/store';
-import * as ProductActions from '../../redux/actions/productActions';
-import {useSelector} from 'react-redux';
+import { store } from "../../Redux/Store/store";
+import { getProduct } from "../../Redux/Actions";
+import { useSelector } from 'react-redux';
+
 const ProductDetail = (props) => {
   let { productId } = useParams();
   useEffect(() => {
     console.log("did Mount of ProductDetail running");
-    store.dispatch(ProductActions.loadSelectedProduct(productId));
+    store.dispatch(getProduct(productId));
   }, [productId]);
 
-  const selectedProductSelector=(state)=>state.product.selectedProduct;
-  const selectedProduct=useSelector(selectedProductSelector);
+  const selectedProductSelector = (state) => state.product.selectedProduct;
+  const selectedProduct = useSelector(selectedProductSelector);
   return (
     <ProductContextConsumer>
       {({ addToCart, productClick }) => {

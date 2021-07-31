@@ -1,13 +1,14 @@
 import { call } from 'redux-saga/effects';
-import { LOADED_PRODUCT,LOADED_SELECTED_PRODUCT } from '../../redux/actionTypes/productActionTypes';
-import store from '../../redux/store/store';
+import { SET_PRODUCTS, SET_PRODUCT } from '../../Redux/ActionTypes';
+import { store } from '../../Redux/Store/store';
+
 export function* handleProductsFetch() {
     console.log("handleProductsFetch is running");
     try {
         let products = [];
         let response = yield call(fetchProducts);
         response && console.log("response received");
-        response.json().then((data) => {
+    response.json().then((data) => {
             products = data.products.map((product) => {
                 let {
                     id,
@@ -26,7 +27,7 @@ export function* handleProductsFetch() {
                 return obj;
             });
             store.dispatch({
-                type: LOADED_PRODUCT,
+                type: SET_PRODUCTS,
                 payload: products
             })
         });
@@ -39,7 +40,7 @@ export function* handleProductsFetch() {
 export function* handleSelectedProductFetch(action) {
     console.log('handleSelectedProductFetch running');
     try {
-        let response = yield call(fetchSelectedProduct,action.payload);
+        let response = yield call(fetchSelectedProduct, action.payload);
         response.json().then((data) => {
             let {
                 id,
@@ -68,7 +69,7 @@ export function* handleSelectedProductFetch(action) {
                 isInCart
             };
             store.dispatch({
-                type: LOADED_SELECTED_PRODUCT,
+                type: SET_PRODUCT,
                 payload: tempSelectedProduct
             })
         })
@@ -92,7 +93,7 @@ function fetchProducts() {
                     "86bf102802msh4e6e648847fb57bp1a475bjsnb4c1de75cc9c",
                 "x-rapidapi-host": "asos2.p.rapidapi.com",
             },
-        } 
+        }
     );
 }
 

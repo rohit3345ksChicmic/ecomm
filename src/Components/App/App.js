@@ -4,16 +4,14 @@ import "./App.css";
 import Modal from "../userAuth/Modal";
 import ProductDetail from "../Product/ProductDetail";
 import Cart from "../Cart/Cart";
+import { store } from "../../Redux/Store/store";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { UserContextProvider } from "../../Contexts/UserContext";
 import { CartContextProvider } from "../../Contexts/CartContext";
 import { SearchContextProvider } from "../../Contexts/SearchContext";
 import { ProductContextProvider } from "../../Contexts/ProductContext";
 import Navbar from "../Navbar/Navbar";
-import store from '../../redux/store/store';
-import * as ProductActions from '../../redux/actions/productActions';
-import * as UserActions from '../../redux/actions/userActions';
-import {loadCart} from '../../redux/actions/cartActions';
+import { logUserIn, getProducts, loadCart } from "../../Redux/Actions";
 var errorString = {
   userName: "Invalid Username",
   email: "Invalid Email Address",
@@ -62,29 +60,29 @@ class App extends React.Component {
   }
 
 
-  setErrorMessages=(errorMessages) =>{
+  setErrorMessages = (errorMessages) => {
     this.setState(() => ({
       errorMessages,
     }));
   }
 
-    
-  
-  addToCart=()=> {
+
+
+  addToCart = () => {
     if (this.state.isLoggedIn) {
       let tempCarts = JSON.parse(localStorage.carts); //Whole Information
       let tempCartItems = tempCarts[this.state.currentUser.email]; //Current User's Cart
-      let tempSelectedProduct=store.getState().product.selectedProduct;
+      let tempSelectedProduct = store.getState().product.selectedProduct;
 
       //let tempSelectedProduct = JSON.parse(JSON.stringify(this.state.selectedProduct)); //SelectedProduct to be added to Cart
       tempSelectedProduct.quantity = 1; //Setting Initial Quantity to 1
       tempCartItems.push(tempSelectedProduct);
       tempCarts[this.state.currentUser.email] = tempCartItems;
       localStorage.setItem("carts", JSON.stringify(tempCarts));
-      
+
       this.setState({
         cartItems: tempCartItems,
-      },()=>{
+      }, () => {
         this.setGrandTotal();
         this.props.history.push("/cart");
       });
@@ -101,7 +99,7 @@ class App extends React.Component {
     }
   }
 
-  searchProducts=(e)=> {
+  searchProducts = (e) => {
     let trimmedSearchQuery = e.target.value;
     trimmedSearchQuery = trimmedSearchQuery.trimStart();
     this.setState(
@@ -132,7 +130,7 @@ class App extends React.Component {
     );
   }
 
-  validateIndividialInputs=(tempErrorMessages, Regex, inputField)=> {
+  validateIndividialInputs = (tempErrorMessages, Regex, inputField) => {
     if (!Regex.test(this.state[inputField])) {
       this.setErrorMessages(tempErrorMessages);
     } else {
@@ -141,7 +139,7 @@ class App extends React.Component {
     }
   }
 
-  validateForm=(inputField)=> {
+  validateForm = (inputField) => {
     if (!this.state.isLoggingIn) {
       let tempErrorMessages = JSON.parse(
         JSON.stringify(this.state.errorMessages)
@@ -243,7 +241,7 @@ class App extends React.Component {
   }
 
 
-  handleChange=(event)=> {
+  handleChange = (event) => {
     this.setState(
       {
         [event.target.name]: event.target.value,
@@ -256,16 +254,16 @@ class App extends React.Component {
     );
   }
 
-  handleLogOut=() =>{
+  handleLogOut = () => {
     localStorage.removeItem("currentUser");
-    
+
     this.setState(() => ({
       isLoggedIn: false,
     }));
     this.props.history.push("/");
   }
 
-  changeForm=()=> {
+  changeForm = () => {
     this.setState((state) => ({
       isLoggingIn: !state.isLoggingIn,
       userName: "",
@@ -275,13 +273,13 @@ class App extends React.Component {
     }));
   }
 
-  changeModalView=()=> {
+  changeModalView = () => {
     this.setState((state) => ({
       viewModal: !state.viewModal,
     }));
   }
 
-  handleLogin=(event)=> {
+  handleLogin = (event) => {
     event.preventDefault();
     let existing_users_data = JSON.parse(localStorage.users);
     let currentUserIndex = Number.MIN_VALUE;
@@ -300,7 +298,7 @@ class App extends React.Component {
       let tempCartItems = JSON.parse(localStorage.carts)[
         JSON.parse(localStorage.currentUser).email
       ];
-      store.dispatch(UserActions.logUserIn(existing_users_data[currentUserIndex]));
+      store.dispatch(logUserIn(existing_users_data[currentUserIndex]));
       store.dispatch(loadCart(tempCartItems));
 
       this.setState(
@@ -359,7 +357,7 @@ class App extends React.Component {
     );
   };
 
-  deleteFromCart=(product, event = null)=> {
+  deleteFromCart = (product, event = null) => {
     let tempCarts = JSON.parse(localStorage.carts); //Whole Information
     let tempCartItems = tempCarts[this.state.currentUser.email]; //Current User's Cart
     let filteredCartItems = tempCartItems.filter(
@@ -377,29 +375,29 @@ class App extends React.Component {
     );
   }
 
-  setGrandTotal=()=> {
+  setGrandTotal = () => {
     let sum = 0;
     this.state.cartItems.forEach((item) => {
       sum += item.quantity * item.price;
     });
-    sum=sum.toFixed(2);
+    sum = sum.toFixed(2);
     this.setState(() => ({
       cartGrandTotal: sum,
     }));
   }
 
 
-  generateUserID=(length = 32)=> {
-    let charactersArr=['0', '1', '2', '3', '4', '5', '6', '7', '8','9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q','R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i','j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r','s', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  generateUserID = (length = 32) => {
+    let charactersArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     let userID = "";
     for (let i = 0; i < 32; i++) {
-        userID += charactersArr[Math.floor(Math.random() * charactersArr.length)];
+      userID += charactersArr[Math.floor(Math.random() * charactersArr.length)];
     }
     return userID;
-    }
+  }
 
 
-  handleSignUp=(event)=> {
+  handleSignUp = (event) => {
     event.preventDefault();
     if (localStorage.users === undefined)
       localStorage.setItem("users", JSON.stringify([]));
@@ -437,7 +435,7 @@ class App extends React.Component {
             }));
             return;
           }
-          let userID=Symbol("userID");
+          let userID = Symbol("userID");
           let user = {
             [userID]: this.generateUserID(),
             userName: this.state.userName,
@@ -478,11 +476,11 @@ class App extends React.Component {
     }
   }
 
-  searchItemClick=(productId, e = null)=> {
+  searchItemClick = (productId, e = null) => {
     fetch(
       "https://asos2.p.rapidapi.com/products/v3/detail?id=" +
-        productId +
-        "&store=US&sizeSchema=US&lang=en-US&currency=USD",
+      productId +
+      "&store=US&sizeSchema=US&lang=en-US&currency=USD",
       {
         method: "GET",
         headers: {
@@ -505,10 +503,10 @@ class App extends React.Component {
         let brandName = data.brand.name;
         let imageUrl = data.media.images[0].url;
         let price = value;
-        let isInCart=false;
-        if(this.state.cartItems.length) {
-          if(this.state.cartItems.some((cartItem)=>cartItem.id===id)){
-            isInCart=true;
+        let isInCart = false;
+        if (this.state.cartItems.length) {
+          if (this.state.cartItems.some((cartItem) => cartItem.id === id)) {
+            isInCart = true;
           }
         }
         let tempSelectedProduct = {
@@ -520,24 +518,24 @@ class App extends React.Component {
           price,
           isInCart
         };
-        this.setState(()=>({
+        this.setState(() => ({
           searchQuery: "",
           searchResults: [],
           selectedProduct: tempSelectedProduct
         }),
-        () => {
-          this.props.history.push(`/products/${this.state.selectedProduct.id}`);
-        })
+          () => {
+            this.props.history.push(`/products/${this.state.selectedProduct.id}`);
+          })
       })
       .catch((err) => {
-        this.setState(()=>({
+        this.setState(() => ({
           searchQuery: "",
           searchResults: [],
           selectedProduct: dummySelectedProduct
         }),
-        () => {
-          this.props.history.push(`/products/${this.state.selectedProduct.id}`);
-        });
+          () => {
+            this.props.history.push(`/products/${this.state.selectedProduct.id}`);
+          });
         console.error(err);
       });
   }
@@ -560,7 +558,7 @@ class App extends React.Component {
         }
       );
     }
-    store.dispatch(ProductActions.loadProduct());
+    store.dispatch(getProducts());
   }
 
   render() {
@@ -593,41 +591,41 @@ class App extends React.Component {
               searchResults: this.state.searchResults,
               searchProducts: this.searchProducts,
               searchItemClick: this.searchItemClick,
-            }}                                                                                                                                                                                              
+            }}
           >
             <CartContextProvider value={{
               cartItems: this.state.cartItems
             }}>
-            <Navbar /></CartContextProvider>
+              <Navbar /></CartContextProvider>
           </SearchContextProvider>
           <Switch>
-          
-            
-              <Route exact path="/">
+
+
+            <Route exact path="/">
               <ProductContextProvider
-              value={{
-                products: this.state.products,
-              }}
-            >
+                value={{
+                  products: this.state.products,
+                }}
+              >
                 <section>
                   {/* Product Listing */}
                   <Products />
                 </section>
-                </ProductContextProvider>
-              </Route>
+              </ProductContextProvider>
+            </Route>
 
-              <Route path="/products/:productId">
-                <ProductContextProvider value={{
-                  selectedProduct: this.state.selectedProduct,
-                  productClick: this.productClick,
-                  addToCart: this.addToCart
-                }}>
+            <Route path="/products/:productId">
+              <ProductContextProvider value={{
+                selectedProduct: this.state.selectedProduct,
+                productClick: this.productClick,
+                addToCart: this.addToCart
+              }}>
                 <ProductDetail />
-                </ProductContextProvider>
-              </Route>
+              </ProductContextProvider>
+            </Route>
 
 
-              <Route path="/cart">
+            <Route path="/cart">
               <CartContextProvider
                 value={{
                   cartItems: this.state.cartItems,
