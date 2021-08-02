@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { UserContextConsumer } from "../../Contexts/UserContext";
 import { Link } from "react-router-dom";
 import SearchResults from "../Search/searchResults";
 import { SearchContextConsumer } from "../../Contexts/SearchContext";
 import { CartContextConsumer } from "../../Contexts/CartContext";
 import Button from '../Button/Button';
+import { logOut } from "../../Redux/Actions";
 
-export default function Navbar(props) {
+export default function Navbar({ changeModalView }) {
+  const dispatch = useDispatch();
   const products = useSelector(state => state.product.products) || [];
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const currentUser = useSelector(state => state.auth.currentUser) || {};
   const [searchWord, setSearchWord] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  
+  const cart = useSelector(state => state.cart.cart);
+  let cartItems = cart.hasOwnProperty(currentUser.email) ? cart[currentUser.email] : [];
+
   useEffect(() => {
     if (searchWord.length) {
       setSearchResults(products.filter(product => {
@@ -24,27 +30,58 @@ export default function Navbar(props) {
     }
   }, [searchWord]);
 
+  const handleLogOut = () => {
+    dispatch(logOut());
+  }
   return (
-          <header className="navbar">
-            <Link to="/">
-              <div className="logo">
-                <img src="/flipkart-logo.png" alt="Flipkart" />
-              </div>
-            </Link>
-            <div className="searchContainer">
-              <div className="searchBarContainer">
-                <input
-                  type="text"
-                  value={searchWord}
-                  placeholder="Search Products..."
-                  className="searchBar"
-                  onChange={(e) => {
-                    setSearchWord(e.target.value.toLowerCase())
-                  }}
-                />
-              </div>
-        {searchResults.length ? <SearchResults resetSearch={() => { setSearchWord("");}} results={searchResults} /> : null}
-            </div>
-          </header>
-        );
+    <header className="navbar">
+      <Link to="/">
+        <div className="logo">
+          <img src="/flipkart-logo.png" alt="Flipkart" />
+        </div>
+      </Link>
+      <div className="searchContainer">
+        <div className="searchBarContainer">
+          <input
+            type="text"
+            value={searchWord}
+            placeholder="Search Products..."
+            className="searchBar"
+            onChange={(e) => {
+              setSearchWord(e.target.value.toLowerCase())
+            }}
+          />
+        </div>
+        {searchResults.length ? <SearchResults resetSearch={() => { setSearchWord(""); }} results={searchResults} /> : null}
+      </div>
+      <div className="userContainer">
+        {/* Login / UserName */}
+        {isLoggedIn ? ( //isLoggedIn
+          <div className="loggedin">
+            <span>{currentUser.hasOwnProperty("userName") ? currentUser.userName : null}</span>
+            {/* currentuser.username */}
+            <Button className="btn-small" click={handleLogOut}>
+              Logout
+            </Button>
+                  <div className="cart">
+                    <a href="/cart">
+                      {cartItems.length ? <div className="cartBadge">{cartItems.length}</div> : null}
+                      <img
+                        src="/shopping-cart-solid.svg"
+                        alt="Shopping Cart"
+                        width="20"
+                        height="20"
+                      />
+                      Cart
+                    </a>
+                  </div>
+          </div>
+        ) : (
+          <Button className="btn-small" click={changeModalView}>
+            Login
+          </Button>
+        )}
+      </div>
+    </header>
+  );
 }

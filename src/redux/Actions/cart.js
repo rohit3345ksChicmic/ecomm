@@ -5,10 +5,12 @@ export const addToCart = (payload) => ({
     payload
 })
 
-export const removeFromCart = (payload) => ({
-    type: REMOVE_FROM_CART,
-    payload
-});
+export const removeFromCart = (payload) => {
+    return {
+        type: REMOVE_FROM_CART,
+        payload
+    }
+};
 
 export const increaseProductQuantity = (payload) => ({
     type: INCREASE_PRODUCT_QUANTITY,

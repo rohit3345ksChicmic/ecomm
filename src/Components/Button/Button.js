@@ -1,5 +1,5 @@
-export default function Button(props){
+export default function Button({className="",click=()=>{},...props}){
     return (
-        <button className={props.class} onClick={(e)=>!props.params ? props.click(e) : props.click(...props.params,e)}>{props.children}</button>
+        <button className={className} onClick={(e)=>!props.params ? click(e) : click(...props.params,e)}>{props.children}</button>
     )
 }

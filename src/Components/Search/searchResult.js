@@ -1,4 +1,4 @@
-function searchResult({result,searchItemClick}){
+function searchResult({result}){
     return (
         <div className="searchedProduct">
                 <div className="imageContainer">

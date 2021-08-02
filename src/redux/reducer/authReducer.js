@@ -1,22 +1,24 @@
-import * as userActionTypes from '../ActionTypes/user';
-export default function userReducer(state={
+import { LOG_IN, LOG_OUT, SIGN_UP } from "../ActionTypes";
+
+const initialState = {
     users: [],
     currentUser: {},
-    isLoggedIn: false                               
-},action){
+    isLoggedIn: false
+}
+export default function userReducer(state = initialState,action){
     switch(action.type){
-        case "users/registerd":
+        case SIGN_UP:
             return {
                 ...state,
                 users: [...state.users,action.payload]
             }
-        case userActionTypes.USER_LOGGED_IN:
+        case LOG_IN:
             return {
                 ...state,
                 currentUser: action.payload,
                 isLoggedIn: true
             }
-        case userActionTypes.USER_LOGGED_OUT:
+        case LOG_OUT:
             return {
                 ...state,
                 currentUser: {},

@@ -8,9 +8,9 @@ function Products() {
   const loading = useSelector(state => state.common.loading);
   const products = useSelector(state => state.product.products);
 
-  return (
+  return !loading ? (
     <ul className="productsList">
-      {!loading ? (products.length ? products.map((product, index) => (
+      {products.length ? products.map((product, index) => (
         <li name={product.id} key={index}>
           <Product
             id={product.id}
@@ -19,9 +19,9 @@ function Products() {
             imageUrl={product.imageUrl}
           />
         </li>
-      )) : "Sorry! No Products Found") : <Loader />}
+      )) : "Sorry! No Products Found"}
     </ul>
-  );
+  ) : <Loader />;
 }
 
 export default Products;

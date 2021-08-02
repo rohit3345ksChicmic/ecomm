@@ -1,6 +1,6 @@
 import CartReducer from './cartReducer';
 import ProductReducer from './productReducer';
-import UserReducer from './userReducer';
+import AuthReducer from './authReducer';
 import commonReducer from './commonReducer';
 import {combineReducers} from 'redux';
 
@@ -24,7 +24,7 @@ import {combineReducers} from 'redux';
 const RootReducer=combineReducers({
     cart: CartReducer,
     product: ProductReducer,
-    user: UserReducer,
+    auth: AuthReducer,
     common: commonReducer
 });
 

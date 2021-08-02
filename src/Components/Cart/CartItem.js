@@ -1,10 +1,20 @@
 import "./Cart.css";
 import Button from '../Button/Button';
 import { CartContextConsumer } from "../../Contexts/CartContext";
+import { useDispatch,useSelector } from "react-redux";
+import { removeFromCart } from "../../Redux/Actions";
+
 function CartItem({ index, cartItem }) {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.auth.currentUser) || {};
+  
+  const deleteFromCart = (item) => {
+    dispatch(removeFromCart({userEmail: currentUser.email, productId: item.id}));
+  }
+
   return (
     <CartContextConsumer>
-      {({ increaseQuantity, decreaseQuantity, deleteFromCart }) => {
+      {({ increaseQuantity, decreaseQuantity }) => {
         return (
           <div key={index} className="cartProductContainer">
             <div className="leftPane">
@@ -19,15 +29,15 @@ function CartItem({ index, cartItem }) {
                       :  decreaseQuantity
                   }
                   params={[index]}
-                  class={`quantityControl decrease ${cartItem.quantity<=1 ? "greyedOut" : null}`}
+                  className={`quantityControl decrease ${cartItem.quantity<=1 ? "greyedOut" : null}`}
                 >
                   -
                 </Button>
-                <Button class="quantity" click={()=>{}}>{cartItem.quantity}</Button>
+                <Button className="quantity" click={()=>{}}>{cartItem.quantity}</Button>
                 <Button
                   click={increaseQuantity}
                   params={[index]}
-                  class="quantityControl increase"
+                  className="quantityControl increase"
                 >
                   +
                 </Button>

@@ -5,13 +5,13 @@ import Modal from "../userAuth/Modal";
 import ProductDetail from "../Product/ProductDetail";
 import Cart from "../Cart/Cart";
 import { store } from "../../Redux/Store/store";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { UserContextProvider } from "../../Contexts/UserContext";
 import { CartContextProvider } from "../../Contexts/CartContext";
 import { SearchContextProvider } from "../../Contexts/SearchContext";
 import { ProductContextProvider } from "../../Contexts/ProductContext";
 import Navbar from "../Navbar/Navbar";
-import { logUserIn, getProducts, addToCart } from "../../Redux/Actions";
+import { logIn, getProducts } from "../../Redux/Actions";
 var errorString = {
   userName: "Invalid Username",
   email: "Invalid Email Address",
@@ -59,15 +59,6 @@ class App extends React.Component {
     };
   }
 
-
-  setErrorMessages = (errorMessages) => {
-    this.setState(() => ({
-      errorMessages,
-    }));
-  }
-
-
-
   addToCart = () => {
     if (this.state.isLoggedIn) {
       // let tempCarts = JSON.parse(localStorage.carts); //Whole Information
@@ -99,148 +90,6 @@ class App extends React.Component {
       this.changeModalView();
     }
   }
-
-  searchProducts = (e) => {
-    let trimmedSearchQuery = e.target.value;
-    trimmedSearchQuery = trimmedSearchQuery.trimStart();
-    this.setState(
-      {
-        searchQuery: trimmedSearchQuery,
-      },
-      () => {
-        if (this.state.searchQuery === "") {
-          this.setState({
-            searchResults: [],
-          });
-          return;
-        } else {
-          let tempProducts = this.state.products;
-          let searchResults = tempProducts.filter((product) =>
-            product.name
-              .toLowerCase()
-              .includes(this.state.searchQuery.toLowerCase())
-          );
-          if (searchResults.length > 6) {
-            searchResults = searchResults.slice(0, 6);
-          }
-          this.setState({
-            searchResults,
-          });
-        }
-      }
-    );
-  }
-
-  validateIndividialInputs = (tempErrorMessages, Regex, inputField) => {
-    if (!Regex.test(this.state[inputField])) {
-      this.setErrorMessages(tempErrorMessages);
-    } else {
-      tempErrorMessages[inputField] = "";
-      this.setErrorMessages(tempErrorMessages);
-    }
-  }
-
-  validateForm = (inputField) => {
-    if (!this.state.isLoggingIn) {
-      let tempErrorMessages = JSON.parse(
-        JSON.stringify(this.state.errorMessages)
-      );
-      switch (inputField) {
-        case "userName":
-          var userNameRegex = /^[A-Za-z0-9]{3,20}$/g;
-          if (this.state[inputField].length === 0) {
-            tempErrorMessages[inputField] = "Username cannot be empty";
-          } else if (this.state[inputField].includes(" ")) {
-            tempErrorMessages[inputField] = "Space is not allowed";
-          } else {
-            tempErrorMessages[inputField] = "Between 3 to 20 characters";
-          }
-          this.validateIndividialInputs(
-            tempErrorMessages,
-            userNameRegex,
-            inputField
-          );
-          break;
-
-        case "email":
-          var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          if (this.state[inputField].length === 0) {
-            tempErrorMessages[inputField] = "Email Field Cannot be empty";
-          } else if (!this.state[inputField].includes("@")) {
-            tempErrorMessages[inputField] = "Please include '@' in the email";
-          } else if (!this.state[inputField].includes(".")) {
-            tempErrorMessages[inputField] = "Please include '.' in the email";
-          } else if (this.state[inputField].includes("..")) {
-            tempErrorMessages[inputField] = "Consecutive dots are not allowed";
-          } else if (
-            this.state[inputField].startsWith("@") ||
-            this.state[inputField].startsWith(".") ||
-            this.state[inputField].endsWith("@") ||
-            this.state[inputField].endsWith(".")
-          ) {
-            tempErrorMessages[inputField] =
-              "'@' or '.' not allowed at beginning or end";
-          } else if (
-            this.state[inputField].split(".")[
-              this.state[inputField].split(".").length - 1
-            ].length < 2
-          ) {
-            tempErrorMessages[inputField] = "Please enter a valid domain";
-          } else if (
-            [...(this.state[inputField].match(/@/g) || [])].length > 1
-          ) {
-            tempErrorMessages[inputField] = "Only one '@' allowed";
-          } else {
-            tempErrorMessages[inputField] = "Invalid Email Address";
-          }
-          this.validateIndividialInputs(
-            tempErrorMessages,
-            emailRegex,
-            inputField
-          );
-          break;
-        case "pw":
-          var pwRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/g;
-          if (this.state[inputField].length === 0) {
-            tempErrorMessages[inputField] = "Password cannot be empty";
-          } else if (!/(?=.*\d)/g.test(this.state[inputField])) {
-            tempErrorMessages[inputField] = "Please include atleast one digit";
-          } else if (!/(?=.*[a-z])/g.test(this.state[inputField])) {
-            tempErrorMessages[inputField] =
-              "Please include atleast one lowercase letter";
-          } else if (!/(?=.*[A-Z])/g.test(this.state[inputField])) {
-            tempErrorMessages[inputField] =
-              "Please include atleast one uppercase letter";
-          } else if (!/(?=.*[!@#$%^&*])/g.test(this.state[inputField])) {
-            tempErrorMessages[inputField] =
-              "Pleae include atleast one special Character/Symbol";
-          } else if (this.state[inputField].length < 8) {
-            tempErrorMessages[inputField] = "Minimum length 8 characters";
-          } else {
-            tempErrorMessages[inputField] = "Please use a stronger password";
-          }
-          this.validateIndividialInputs(tempErrorMessages, pwRegex, inputField);
-          break;
-        case "confirmPw":
-          if (this.state.pw !== this.state.confirmPw) {
-            tempErrorMessages[inputField] = errorString[inputField];
-            this.setState(() => ({
-              errorMessages: tempErrorMessages,
-            }));
-          } else {
-            tempErrorMessages[inputField] = "";
-            this.setState(() => ({
-              errorMessages: tempErrorMessages,
-            }));
-          }
-          break;
-
-        default:
-          break;
-      }
-    }
-  }
-
 
   handleChange = (event) => {
     this.setState(
@@ -280,49 +129,49 @@ class App extends React.Component {
     }));
   }
 
-  handleLogin = (event) => {
-    event.preventDefault();
-    let existing_users_data = JSON.parse(localStorage.users);
-    let currentUserIndex = Number.MIN_VALUE;
-    let isAuthenticated = existing_users_data.some((user, index) => {
-      currentUserIndex = index;
-      return (
-        user.email === event.target.email.value &&
-        user.pw === event.target.pw.value
-      );
-    });
-    if (isAuthenticated) {
-      localStorage.setItem(
-        "currentUser",
-        JSON.stringify(existing_users_data[currentUserIndex])
-      );
-      let tempCartItems = JSON.parse(localStorage.carts)[
-        JSON.parse(localStorage.currentUser).email
-      ];
-      store.dispatch(logUserIn(existing_users_data[currentUserIndex]));
+  // handleLogin = (event) => {
+  //   event.preventDefault();
+  //   let existing_users_data = JSON.parse(localStorage.users);
+  //   let currentUserIndex = Number.MIN_VALUE;
+  //   let isAuthenticated = existing_users_data.some((user, index) => {
+  //     currentUserIndex = index;
+  //     return (
+  //       user.email === event.target.email.value &&
+  //       user.pw === event.target.pw.value
+  //     );
+  //   });
+  //   if (isAuthenticated) {
+  //     localStorage.setItem(
+  //       "currentUser",
+  //       JSON.stringify(existing_users_data[currentUserIndex])
+  //     );
+  //     let tempCartItems = JSON.parse(localStorage.carts)[
+  //       JSON.parse(localStorage.currentUser).email
+  //     ];
+  //     store.dispatch(logIn(existing_users_data[currentUserIndex]));
 
-      this.setState(
-        () => ({
-          isLoggedIn: true,
-          email: "",
-          pw: "",
-          currentUser: existing_users_data[currentUserIndex],
-          viewModal: false,
-          cartItems: tempCartItems,
-        }),
-        () => {
-          console.log("Currentuser: ", this.state.currentUser);
-          console.log("cartItems: ", this.state.cartItems);
-          this.setGrandTotal();
-        }
-      );
-      // if(JSON.stringify(this.state.selectedProduct)!==JSON.stringify({})){
-      //   this.props.history.push(`/products/${this.state.selectedProduct.id}`);
-      // }
-    } else {
-      alert("Sorry! Invalid Email or Password. You cannot log in. :(");
-    }
-  }
+  //     this.setState(
+  //       () => ({
+  //         isLoggedIn: true,
+  //         email: "",
+  //         pw: "",
+  //         currentUser: existing_users_data[currentUserIndex],
+  //         viewModal: false,
+  //         cartItems: tempCartItems,
+  //       }),
+  //       () => {
+  //         console.log("Currentuser: ", this.state.currentUser);
+  //         console.log("cartItems: ", this.state.cartItems);
+  //         this.setGrandTotal();
+  //       }
+  //     );
+  //     // if(JSON.stringify(this.state.selectedProduct)!==JSON.stringify({})){
+  //     //   this.props.history.push(`/products/${this.state.selectedProduct.id}`);
+  //     // }
+  //   } else {
+  //     alert("Sorry! Invalid Email or Password. You cannot log in. :(");
+  //   }
+  // }
 
   decreaseQuantity = (cartItemIndex, e = null) => {
     let tempCartItems = this.state.cartItems;
@@ -375,170 +224,90 @@ class App extends React.Component {
     );
   }
 
-  setGrandTotal = () => {
-    let sum = 0;
-    this.state.cartItems.forEach((item) => {
-      sum += item.quantity * item.price;
-    });
-    sum = sum.toFixed(2);
-    this.setState(() => ({
-      cartGrandTotal: sum,
-    }));
-  }
+  
 
 
-  generateUserID = (length = 32) => {
-    let charactersArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    let userID = "";
-    for (let i = 0; i < 32; i++) {
-      userID += charactersArr[Math.floor(Math.random() * charactersArr.length)];
-    }
-    return userID;
-  }
+  
 
 
-  handleSignUp = (event) => {
-    event.preventDefault();
-    if (localStorage.users === undefined)
-      localStorage.setItem("users", JSON.stringify([]));
-    if (localStorage.carts === undefined) {
-      localStorage.setItem("carts", JSON.stringify({}));
-    }
-    var isAlreadyRegistered;
-    if (
-      this.state.errorMessages.userName === "" &&
-      this.state.errorMessages.email === "" &&
-      this.state.errorMessages.pw === "" &&
-      this.state.errorMessages.confirmPw === "" &&
-      this.state.userName !== "" &&
-      this.state.email !== "" &&
-      this.state.pw !== "" &&
-      this.state.confirmPw !== ""
-    ) {
-      this.setState(
-        () => ({
-          isValidated: true,
-        }),
-        () => {
-          console.log("True: ", this.state.isValidated);
-          if (localStorage.users !== undefined) {
-            let existing_users_data = JSON.parse(localStorage.users);
-            isAlreadyRegistered = existing_users_data.some(
-              (user) => user.email === this.state.email
-            );
-          }
-          if (isAlreadyRegistered) {
-            alert("This email Address is already Registered with us.");
-            this.setState((state) => ({
-              isLoggingIn: !state.isLoggingIn,
-              pw: "",
-            }));
-            return;
-          }
-          let userID = Symbol("userID");
-          let user = {
-            [userID]: this.generateUserID(),
-            userName: this.state.userName,
-            email: this.state.email,
-            pw: this.state.pw,
-          };
-          console.log(user[userID]);
-          let tempusers = JSON.parse(localStorage.users);
-          tempusers.push(user);
-          localStorage.setItem("users", JSON.stringify(tempusers));
-          let tempCarts = JSON.parse(localStorage.carts);
-          tempCarts[this.state.email] = [];
-          localStorage.setItem("carts", JSON.stringify(tempCarts));
-          alert("Signed Up successfully. You can now Log in.");
-          this.changeForm();
+  // handleSignUp = (event) => {
+  //   event.preventDefault();
+  //   if (localStorage.users === undefined)
+  //     localStorage.setItem("users", JSON.stringify([]));
+  //   if (localStorage.carts === undefined) {
+  //     localStorage.setItem("carts", JSON.stringify({}));
+  //   }
+  //   var isAlreadyRegistered;
+  //   if (
+  //     this.state.errorMessages.userName === "" &&
+  //     this.state.errorMessages.email === "" &&
+  //     this.state.errorMessages.pw === "" &&
+  //     this.state.errorMessages.confirmPw === "" &&
+  //     this.state.userName !== "" &&
+  //     this.state.email !== "" &&
+  //     this.state.pw !== "" &&
+  //     this.state.confirmPw !== ""
+  //   ) {
+  //     this.setState(
+  //       () => ({
+  //         isValidated: true,
+  //       }),
+  //       () => {
+  //         console.log("True: ", this.state.isValidated);
+  //         if (localStorage.users !== undefined) {
+  //           let existing_users_data = JSON.parse(localStorage.users);
+  //           isAlreadyRegistered = existing_users_data.some(
+  //             (user) => user.email === this.state.email
+  //           );
+  //         }
+  //         if (isAlreadyRegistered) {
+  //           alert("This email Address is already Registered with us.");
+  //           this.setState((state) => ({
+  //             isLoggingIn: !state.isLoggingIn,
+  //             pw: "",
+  //           }));
+  //           return;
+  //         }
+  //         let userID = Symbol("userID");
+  //         let user = {
+  //           [userID]: this.generateUserID(),
+  //           userName: this.state.userName,
+  //           email: this.state.email,
+  //           pw: this.state.pw,
+  //         };
+  //         console.log(user[userID]);
+  //         let tempusers = JSON.parse(localStorage.users);
+  //         tempusers.push(user);
+  //         localStorage.setItem("users", JSON.stringify(tempusers));
+  //         let tempCarts = JSON.parse(localStorage.carts);
+  //         tempCarts[this.state.email] = [];
+  //         localStorage.setItem("carts", JSON.stringify(tempCarts));
+  //         alert("Signed Up successfully. You can now Log in.");
+  //         this.changeForm();
 
-          console.log(JSON.parse(localStorage.users));
-          this.setState(() => ({
-            isLoggingIn: true,
-            email: "",
-            pw: "",
-            confirmPw: "",
-            userName: "",
-          }));
-        }
-      );
-    } else {
-      this.setState(
-        () => ({
-          isValidated: false,
-        }),
-        () => {
-          console.log("False: ", this.state.isValidated);
-          alert("Sorry! You can't sign up because form is not validated.");
-        }
-      );
-      return;
-    }
-  }
-
-  searchItemClick = (productId, e = null) => {
-    fetch(
-      "https://asos2.p.rapidapi.com/products/v3/detail?id=" +
-      productId +
-      "&store=US&sizeSchema=US&lang=en-US&currency=USD",
-      {
-        method: "GET",
-        headers: {
-          "x-rapidapi-key":
-            "625eabae30msh7331e06a5d6ef78p114934jsnc72d6b398fb8",
-          "x-rapidapi-host": "asos2.p.rapidapi.com",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        let {
-          id,
-          name,
-          description,
-          price: {
-            current: { value },
-          },
-        } = data;
-        let brandName = data.brand.name;
-        let imageUrl = data.media.images[0].url;
-        let price = value;
-        let isInCart = false;
-        if (this.state.cartItems.length) {
-          if (this.state.cartItems.some((cartItem) => cartItem.id === id)) {
-            isInCart = true;
-          }
-        }
-        let tempSelectedProduct = {
-          id,
-          name,
-          description,
-          brandName,
-          imageUrl,
-          price,
-          isInCart
-        };
-        this.setState(() => ({
-          searchQuery: "",
-          searchResults: [],
-          selectedProduct: tempSelectedProduct
-        }),
-          () => {
-            this.props.history.push(`/products/${this.state.selectedProduct.id}`);
-          })
-      })
-      .catch((err) => {
-        this.setState(() => ({
-          searchQuery: "",
-          searchResults: [],
-          selectedProduct: dummySelectedProduct
-        }),
-          () => {
-            this.props.history.push(`/products/${this.state.selectedProduct.id}`);
-          });
-        console.error(err);
-      });
-  }
+  //         console.log(JSON.parse(localStorage.users));
+  //         this.setState(() => ({
+  //           isLoggingIn: true,
+  //           email: "",
+  //           pw: "",
+  //           confirmPw: "",
+  //           userName: "",
+  //         }));
+  //       }
+  //     );
+  //   } else {
+  //     this.setState(
+  //       () => ({
+  //         isValidated: false,
+  //       }),
+  //       () => {
+  //         console.log("False: ", this.state.isValidated);
+  //         alert("Sorry! You can't sign up because form is not validated.");
+  //       }
+  //     );
+  //     return;
+  //   }
+  // }
 
   componentDidMount() {
     if (
@@ -585,47 +354,25 @@ class App extends React.Component {
         }}
       >
         <div className="App">
-          <SearchContextProvider
-            value={{
-              searchQuery: this.state.searchQuery,
-              searchResults: this.state.searchResults,
-              searchProducts: this.searchProducts,
-              searchItemClick: this.searchItemClick,
-            }}
-          >
             <CartContextProvider value={{
               cartItems: this.state.cartItems
             }}>
-              <Navbar /></CartContextProvider>
-          </SearchContextProvider>
+              <Navbar changeModalView={this.changeModalView} /></CartContextProvider>          
           <Switch>
 
 
             <Route exact path="/">
-              <ProductContextProvider
-                value={{
-                  products: this.state.products,
-                }}
-              >
                 <section>
                   {/* Product Listing */}
                   <Products />
                 </section>
-              </ProductContextProvider>
             </Route>
 
             <Route path="/product/:productId">
-              <ProductContextProvider value={{
-                selectedProduct: this.state.selectedProduct,
-                productClick: this.productClick,
-                addToCart: this.addToCart
-              }}>
-                <ProductDetail />
-              </ProductContextProvider>
+              <ProductDetail changeModalView={this.changeModalView} />
             </Route>
 
-
-            <Route path="/cart">
+            <Route exact path="/cart">
               <CartContextProvider
                 value={{
                   cartItems: this.state.cartItems,
@@ -637,13 +384,14 @@ class App extends React.Component {
                 <Cart />
               </CartContextProvider>
             </Route>
+            <Redirect from="*" to="/" />
           </Switch>
           {this.state.viewModal ? (
             <div className="backDrop" onClick={this.changeModalView}></div>
           ) : null}
           {/* Backdrop */}
           {/* Modal for SignUp / Login */}
-          <Modal />
+          <Modal changeModalView={this.changeModalView} changeForm={this.changeForm} viewModal={this.state.viewModal} isLoggingIn={this.state.isLoggingIn} />
         </div>
       </UserContextProvider>
     );

@@ -1,15 +1,35 @@
+import { useState,useEffect } from "react";
 import "./Cart.css";
 import CartItem from "./CartItem";
 import { withRouter } from "react-router-dom";
 import { CartContextConsumer } from "../../Contexts/CartContext";
+import { useSelector } from 'react-redux';
+
 function Cart(props) {
-  if (localStorage.currentUser === undefined) {
+  const [cartGrandTotal, setCartGrandTotal] = useState(0);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const cart = useSelector(state => state.cart.cart);
+  const currentUser = useSelector(state => state.auth.currentUser);
+  let cartItems = cart.hasOwnProperty(currentUser.email) ? cart[currentUser.email] : [];
+  
+  const findGrandTotal = () => {
+    let sum = 0;
+    cartItems.forEach((item) => {
+      sum += item.quantity * item.price;
+    });
+    sum = sum.toFixed(2);
+    setCartGrandTotal(sum);
+  }
+
+  useEffect(() => {
+    findGrandTotal();
+  }, []);
+
+  if (!isLoggedIn) {
     props.history.push("/");
   }
+
   return (
-    <CartContextConsumer>
-      {({ cartItems, cartGrandTotal }) => {
-        return (
           <div className="cartItemsContainer">
             {cartItems.map((cartItem, index) => (
               <li key={index}>
@@ -30,9 +50,6 @@ function Cart(props) {
             )}
           </div>
         );
-      }}
-    </CartContextConsumer>
-  );
 }
 
 export default withRouter(Cart);
