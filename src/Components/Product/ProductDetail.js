@@ -76,7 +76,6 @@ const ProductDetail = (props) => {
               </div>
             </>
               : <Loader />}
-
           </div>
         );
       }}
