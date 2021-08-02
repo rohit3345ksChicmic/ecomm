@@ -16,13 +16,13 @@ const ProductDetail = (props) => {
 
   const selectedProductSelector = (state) => state.product.selectedProduct;
   const selectedProduct = useSelector(selectedProductSelector);
+
+  const handleAddProductToCart = () => {
+    
+  }
   return (
     <ProductContextConsumer>
-      {({ addToCart, productClick }) => {
-        // if(JSON.stringify(selectedProduct)===JSON.stringify({})) {
-        //   console.log("did Mount of ProductDetail running");
-        //   productClick(productId);
-        // }
+      {({ addToCart }) => {
 
         return (
           <div className="productContainer">

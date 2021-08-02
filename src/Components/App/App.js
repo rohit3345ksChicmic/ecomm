@@ -11,7 +11,7 @@ import { CartContextProvider } from "../../Contexts/CartContext";
 import { SearchContextProvider } from "../../Contexts/SearchContext";
 import { ProductContextProvider } from "../../Contexts/ProductContext";
 import Navbar from "../Navbar/Navbar";
-import { logUserIn, getProducts, loadCart } from "../../Redux/Actions";
+import { logUserIn, getProducts, addToCart } from "../../Redux/Actions";
 var errorString = {
   userName: "Invalid Username",
   email: "Invalid Email Address",
@@ -70,22 +70,23 @@ class App extends React.Component {
 
   addToCart = () => {
     if (this.state.isLoggedIn) {
-      let tempCarts = JSON.parse(localStorage.carts); //Whole Information
-      let tempCartItems = tempCarts[this.state.currentUser.email]; //Current User's Cart
-      let tempSelectedProduct = store.getState().product.selectedProduct;
+      // let tempCarts = JSON.parse(localStorage.carts); //Whole Information
+      // let tempCartItems = tempCarts[this.state.currentUser.email]; //Current User's Cart
+      // let tempSelectedProduct = store.getState().product.selectedProduct;
 
-      //let tempSelectedProduct = JSON.parse(JSON.stringify(this.state.selectedProduct)); //SelectedProduct to be added to Cart
-      tempSelectedProduct.quantity = 1; //Setting Initial Quantity to 1
-      tempCartItems.push(tempSelectedProduct);
-      tempCarts[this.state.currentUser.email] = tempCartItems;
-      localStorage.setItem("carts", JSON.stringify(tempCarts));
+      // //let tempSelectedProduct = JSON.parse(JSON.stringify(this.state.selectedProduct)); //SelectedProduct to be added to Cart
+      // tempSelectedProduct.quantity = 1; //Setting Initial Quantity to 1
+      // tempCartItems.push(tempSelectedProduct);
+      // tempCarts[this.state.currentUser.email] = tempCartItems;
+      // localStorage.setItem("carts", JSON.stringify(tempCarts));
 
-      this.setState({
-        cartItems: tempCartItems,
-      }, () => {
-        this.setGrandTotal();
-        this.props.history.push("/cart");
-      });
+      // this.setState({
+      //   cartItems: tempCartItems,
+      // }, () => {
+      //   this.setGrandTotal();
+      //   this.props.history.push("/cart");
+      // });
+
     } else {
       this.setState(
         () => ({
@@ -299,7 +300,6 @@ class App extends React.Component {
         JSON.parse(localStorage.currentUser).email
       ];
       store.dispatch(logUserIn(existing_users_data[currentUserIndex]));
-      store.dispatch(loadCart(tempCartItems));
 
       this.setState(
         () => ({
@@ -614,7 +614,7 @@ class App extends React.Component {
               </ProductContextProvider>
             </Route>
 
-            <Route path="/products/:productId">
+            <Route path="/product/:productId">
               <ProductContextProvider value={{
                 selectedProduct: this.state.selectedProduct,
                 productClick: this.productClick,

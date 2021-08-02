@@ -1,6 +1,21 @@
-import {CART_LOADED} from '../ActionTypes/cart';
+import { ADD_TO_CART, REMOVE_FROM_CART, INCREASE_PRODUCT_QUANTITY, DECREASE_PRODUCT_QUANTITY } from '../ActionTypes';
 
-export const loadCart=(cartItems)=>({
-    type: CART_LOADED,
-    payload: cartItems
+export const addToCart = (payload) => ({
+    type: ADD_TO_CART,
+    payload
+})
+
+export const removeFromCart = (payload) => ({
+    type: REMOVE_FROM_CART,
+    payload
+});
+
+export const increaseProductQuantity = (payload) => ({
+    type: INCREASE_PRODUCT_QUANTITY,
+    payload
+});
+
+export const decreaseProductQuantity = (payload) => ({
+    type: DECREASE_PRODUCT_QUANTITY,
+    payload
 });

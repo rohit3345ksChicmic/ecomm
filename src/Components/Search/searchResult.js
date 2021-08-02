@@ -6,7 +6,7 @@ function searchResult({result,searchItemClick}){
                 </div>
                 <div className="titleContainer">
                     <p className="searchResultTitle">
-                        {result.name.slice(0,40)+". . ."}
+                        {result.name.slice(0,30)+". . ."}
                     </p>
                 </div>
         </div>

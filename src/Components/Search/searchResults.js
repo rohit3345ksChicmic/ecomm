@@ -1,16 +1,18 @@
 import SearchResult from "./searchResult";
+import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 import { SearchContextConsumer } from "../../Contexts/SearchContext";
-function SearchResults(props) {
+
+function SearchResults({results, resetSearch}) {
+  const history = useHistory();
   return (
-    <SearchContextConsumer>
-      {({searchResults,searchItemClick}) => {
-        return (
           <div className="searchResultsContainer">
             <ul className="searchResultsList">
-              {searchResults.map((result, index) => (
+              {results.slice(0,6).map((result, index) => (
                 <li
                   onClick={(e) => {
-                    searchItemClick(result.id, e);
+                    history.push(`/product/${result.id}`);
+                    resetSearch();
                   }}
                   key={index}
                 >
@@ -20,9 +22,6 @@ function SearchResults(props) {
             </ul>
           </div>
         );
-      }}
-    </SearchContextConsumer>
-  );
 }
 
 export default SearchResults;
