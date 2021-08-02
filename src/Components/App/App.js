@@ -4,6 +4,7 @@ import "./App.css";
 import Modal from "../userAuth/Modal";
 import ProductDetail from "../Product/ProductDetail";
 import Cart from "../Cart/Cart";
+import Loader from "../Loader";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { UserContextProvider } from "../../Contexts/UserContext";
 import { CartContextProvider } from "../../Contexts/CartContext";
@@ -705,7 +706,7 @@ class App extends React.Component {
             >
                 <section className="main_sec">
                   {/* Product Listing */}
-                  {this.state.products.length ? <Products /> : <img src="/loader.gif" alt="Loader" className="loader" />}
+                  {this.state.products.length ? <Products /> : <Loader />}
                 </section>
                 </ProductContextProvider>
               </Route>
