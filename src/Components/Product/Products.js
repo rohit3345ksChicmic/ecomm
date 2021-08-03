@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Product from "./Product";
 import Loader from "../Loader";
 import "../App/App.css";
@@ -8,6 +8,9 @@ function Products() {
   const loading = useSelector(state => state.common.loading);
   const products = useSelector(state => state.product.products);
 
+  useEffect(() => {
+    document.title = "Home : Flipkart Clone";
+  }, []);
   return !loading ? (
     <ul className="productsList">
       {products.length ? products.map((product, index) => (

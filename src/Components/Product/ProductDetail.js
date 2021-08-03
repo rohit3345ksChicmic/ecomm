@@ -9,6 +9,11 @@ import { useSelector, useDispatch } from 'react-redux';
 const ProductDetail = ({ changeModalView, ...props }) => {
   const dispatch = useDispatch();
   let { productId } = useParams();
+  
+  useEffect(() => {
+    document.title = "Product : Flipkart Clone";
+  }, []);
+
   useEffect(() => {
     console.log("did Mount of ProductDetail running");
     dispatch(getProduct(productId));

@@ -21,6 +21,10 @@ function Cart(props) {
     sum = sum.toFixed(2);
     return sum;
   }
+
+  useEffect(() => {
+    document.title = "Cart : Flipkart Clone";
+  }, []);
   
   useEffect(() => {
     setCartItems(cart?.[currentUser.email] ?? []);
