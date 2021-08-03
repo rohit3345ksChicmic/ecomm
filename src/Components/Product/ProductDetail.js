@@ -15,7 +15,6 @@ const ProductDetail = ({ changeModalView, ...props }) => {
   }, []);
 
   useEffect(() => {
-    console.log("did Mount of ProductDetail running");
     dispatch(getProduct(productId));
 
     return () => {
@@ -27,7 +26,7 @@ const ProductDetail = ({ changeModalView, ...props }) => {
   const selectedProduct = useSelector((state) => state.product.selectedProduct);
   const currentUser = useSelector(state => state.auth.currentUser) || {};
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  const cart = useSelector(state => state.cart.cart);
+  const cart = useSelector(state => state.cart.cart) || {};
   let isProductInCart = false;
   if (isLoggedIn) {
     let cartItems = cart.hasOwnProperty(currentUser.email) ? cart[currentUser.email] : [];
@@ -42,10 +41,7 @@ const ProductDetail = ({ changeModalView, ...props }) => {
           <img src={`http://${selectedProduct.imageUrl}`} alt={selectedProduct.name} />
         </div>
         <div className="btnContainer">
-          <Button className="btn buyNow" click={() => {
-            props.history.push("/cart");
-            console.log("Buy Now Click Hanlder Ran");
-          }}>
+          <Button className="btn buyNow" click={() => {}}>
             <img src="/buyNow.svg" alt="Buy Now" />
             Buy Now
           </Button>

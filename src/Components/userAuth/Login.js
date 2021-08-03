@@ -13,7 +13,6 @@ const Login = ({ changeForm, changeModalView }) => {
   const handleLogIn = (e) => {
     e.preventDefault();
     if (users.some(user => user.email === email && user.password === password)) {
-      console.log("Authenticated");
       dispatch(logIn(users.find(user => user.email === email && user.password === password)));
       setEmail("");
       setPassword("");

@@ -36,9 +36,6 @@ const SignUp = ({ changeForm, isLoggingIn }) => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log("Signing Up");
-    console.log(errorMessages, "errorMessages");
-    console.log("Error Messages Status: ",);
     if (
       Object.values(errorMessages).every(error => error === "") &&
       userName !== "" &&
@@ -76,7 +73,6 @@ const SignUp = ({ changeForm, isLoggingIn }) => {
 
   const validateIndividialInputs = (tempErrorMessages, Regex, value) => {
     if (!Regex.test(value)) {
-      console.log("password regex failed");
       setErrorMessages(tempErrorMessages);
     } else {
       tempErrorMessages[currentField] = "";
