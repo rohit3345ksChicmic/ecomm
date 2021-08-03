@@ -13,7 +13,7 @@ export default function Navbar({ changeModalView }) {
   const [searchWord, setSearchWord] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [productsInCart, setProductsInCart] = useState(0);
-  const cart = useSelector(state => state.cart.cart);
+  const cart = useSelector(state => state.cart.cart) || {};
   let cartItems = cart.hasOwnProperty(currentUser.email) ? cart[currentUser.email] : [];
 
   useEffect(() => {
