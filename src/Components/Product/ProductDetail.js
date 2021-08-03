@@ -18,11 +18,17 @@ const ProductDetail = ({changeModalView,...props}) => {
       dispatch(setProduct({}));
     }
   }, [productId]);
-  console.log(props, "props")
+
   const loading = useSelector(state => state.common.loading);
   const selectedProduct = useSelector((state) => state.product.selectedProduct);
   const currentUser = useSelector(state => state.auth.currentUser) || {};
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const cart = useSelector(state => state.cart.cart);
+  let isProductInCart = false;
+  if (isLoggedIn) {
+    let cartItems = cart.hasOwnProperty(currentUser.email) ? cart[currentUser.email] : [];
+    isProductInCart = cartItems.some(item => item.id === selectedProduct.id);
+  }
 
   return !loading ? (
     <div className="productContainer">
@@ -39,7 +45,7 @@ const ProductDetail = ({changeModalView,...props}) => {
             <img src="/buyNow.svg" alt="Buy Now" />
             Buy Now
           </Button>
-          <Button className="btn addToCart" click={selectedProduct.isInCart ? () => {
+          <Button className="btn addToCart" click={isProductInCart ? () => {
             props.history.push('/cart');
           }
             :
@@ -49,6 +55,7 @@ const ProductDetail = ({changeModalView,...props}) => {
                 props.history.push("/cart");
               }
               else {
+                alert("You have to be logged in to add product to cart");
                 changeModalView();
               }
             }
@@ -59,7 +66,7 @@ const ProductDetail = ({changeModalView,...props}) => {
               height="16"
               alt="Shopping Cart"
             />
-            {selectedProduct.isInCart ? " Go to Cart " : " Add to Cart"}
+            {isProductInCart ? " Go to Cart " : " Add to Cart"}
           </Button>
         </div>
       </div>

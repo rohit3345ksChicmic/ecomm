@@ -15,8 +15,13 @@ export default function Navbar({ changeModalView }) {
   const currentUser = useSelector(state => state.auth.currentUser) || {};
   const [searchWord, setSearchWord] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [productsInCart, setProductsInCart] = useState(0);
   const cart = useSelector(state => state.cart.cart);
   let cartItems = cart.hasOwnProperty(currentUser.email) ? cart[currentUser.email] : [];
+
+  useEffect(() => {
+    setProductsInCart(cartItems.length);
+  }, [cartItems.length]);
 
   useEffect(() => {
     if (searchWord.length) {
@@ -65,7 +70,7 @@ export default function Navbar({ changeModalView }) {
             </Button>
                   <div className="cart">
                     <a href="/cart">
-                      {cartItems.length ? <div className="cartBadge">{cartItems.length}</div> : null}
+                      {productsInCart ? <div className="cartBadge">{productsInCart}</div> : null}
                       <img
                         src="/shopping-cart-solid.svg"
                         alt="Shopping Cart"

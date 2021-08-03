@@ -2,15 +2,17 @@ import { useState,useEffect } from "react";
 import "./Cart.css";
 import CartItem from "./CartItem";
 import { withRouter } from "react-router-dom";
-import { CartContextConsumer } from "../../Contexts/CartContext";
 import { useSelector } from 'react-redux';
 
 function Cart(props) {
-  const [cartGrandTotal, setCartGrandTotal] = useState(0);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  if (!isLoggedIn) {
+    props.history.push("/");
+  }
+  // const [cartGrandTotal, setCartGrandTotal] = useState(0);
   const cart = useSelector(state => state.cart.cart);
   const currentUser = useSelector(state => state.auth.currentUser);
-  let cartItems = cart.hasOwnProperty(currentUser.email) ? cart[currentUser.email] : [];
+  const [cartItems, setCartItems] = useState(cart?.[currentUser.email] ?? []);
   
   const findGrandTotal = () => {
     let sum = 0;
@@ -18,16 +20,12 @@ function Cart(props) {
       sum += item.quantity * item.price;
     });
     sum = sum.toFixed(2);
-    setCartGrandTotal(sum);
+    return sum;
   }
-
+  
   useEffect(() => {
-    findGrandTotal();
-  }, []);
-
-  if (!isLoggedIn) {
-    props.history.push("/");
-  }
+    setCartItems(cart?.[currentUser.email] ?? []);
+  }, [cart]);
 
   return (
           <div className="cartItemsContainer">
@@ -41,7 +39,7 @@ function Cart(props) {
                 <div>
                   Number of Products: <span>{cartItems.length}</span>
                 </div>
-                <div>Grand Total: {"$" + cartGrandTotal}</div>
+                <div>Grand Total: {"$" + findGrandTotal()}</div>
               </div>
             ) : (
               <div className="cartSummary">
