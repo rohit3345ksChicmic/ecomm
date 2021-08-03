@@ -1,7 +1,7 @@
 import "./Cart.css";
 import Button from '../Button/Button';
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart, increaseProductQuantity, decreaseProductQuantity } from "../../reduxxx/Actions";
+import { removeFromCart, increaseProductQuantity, decreaseProductQuantity } from "../../Redux/Actions";
 
 function CartItem({ index, cartItem }) {
   const dispatch = useDispatch();

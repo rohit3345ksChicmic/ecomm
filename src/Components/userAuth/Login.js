@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../App/App.css";
 import Button from '../Button/Button';
 import { useSelector, useDispatch } from "react-redux";
-import { logIn } from "../../reduxxx/Actions";
+import { logIn } from "../../Redux/Actions";
 
 const Login = ({ changeForm, changeModalView }) => {
   const dispatch = useDispatch();

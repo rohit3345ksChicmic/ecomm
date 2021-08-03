@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../App/App.css";
 import Button from '../Button/Button';
 import { useSelector, useDispatch } from "react-redux";
-import { signUp } from "../../reduxxx/Actions";
+import { signUp } from "../../Redux/Actions";
 
 const SignUp = ({ changeForm, isLoggingIn }) => {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ const SignUp = ({ changeForm, isLoggingIn }) => {
         changeForm();
       }
       else {
-        
+
         let newUser = {
           userId: generateUserID(),
           userName,

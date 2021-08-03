@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SearchResults from "../Search/searchResults";
 import Button from '../Button/Button';
-import { logOut } from "../../reduxxx/Actions";
+import { logOut } from "../../Redux/Actions";
 
 export default function Navbar({ changeModalView }) {
   const dispatch = useDispatch();
@@ -65,18 +65,18 @@ export default function Navbar({ changeModalView }) {
             <Button className="btn-small" click={handleLogOut}>
               Logout
             </Button>
-                  <div className="cart">
-                    <a href="/cart">
-                      {productsInCart ? <div className="cartBadge">{productsInCart}</div> : null}
-                      <img
-                        src="/shopping-cart-solid.svg"
-                        alt="Shopping Cart"
-                        width="20"
-                        height="20"
-                      />
-                      Cart
-                    </a>
-                  </div>
+            <div className="cart">
+              <a href="/cart">
+                {productsInCart ? <div className="cartBadge">{productsInCart}</div> : null}
+                <img
+                  src="/shopping-cart-solid.svg"
+                  alt="Shopping Cart"
+                  width="20"
+                  height="20"
+                />
+                Cart
+              </a>
+            </div>
           </div>
         ) : (
           <Button className="btn-small" click={changeModalView}>
