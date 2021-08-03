@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../App/App.css";
 import Button from '../Button/Button';
-import { UserContextConsumer } from "../../Contexts/UserContext";
 import { useSelector, useDispatch } from "react-redux";
 import { signUp } from "../../Redux/Actions";
 
-const SignUp = ({ changeForm, isLoggingIn, changeModalView }) => {
+const SignUp = ({ changeForm, isLoggingIn }) => {
   const dispatch = useDispatch();
   var errorString = {
     userName: "Invalid Username",

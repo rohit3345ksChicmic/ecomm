@@ -1,5 +1,4 @@
 import "./ProductDetail.css";
-import { ProductContextConsumer } from "../../Contexts/ProductContext";
 import Button from "../Button/Button";
 import Loader from "../Loader";
 import { useParams, withRouter } from "react-router-dom";

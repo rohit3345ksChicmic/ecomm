@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { UserContextConsumer } from "../../Contexts/UserContext";
 import { Link } from "react-router-dom";
 import SearchResults from "../Search/searchResults";
-import { SearchContextConsumer } from "../../Contexts/SearchContext";
-import { CartContextConsumer } from "../../Contexts/CartContext";
 import Button from '../Button/Button';
 import { logOut } from "../../Redux/Actions";
 

@@ -9,7 +9,6 @@ function Cart(props) {
   if (!isLoggedIn) {
     props.history.push("/");
   }
-  // const [cartGrandTotal, setCartGrandTotal] = useState(0);
   const cart = useSelector(state => state.cart.cart);
   const currentUser = useSelector(state => state.auth.currentUser);
   const [cartItems, setCartItems] = useState(cart?.[currentUser.email] ?? []);

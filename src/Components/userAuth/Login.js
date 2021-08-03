@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../App/App.css";
 import Button from '../Button/Button';
-import { UserContextConsumer } from "../../Contexts/UserContext";
 import { useSelector, useDispatch } from "react-redux";
 import { logIn } from "../../Redux/Actions";
 

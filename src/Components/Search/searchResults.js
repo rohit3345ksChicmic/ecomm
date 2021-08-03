@@ -1,7 +1,5 @@
 import SearchResult from "./searchResult";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
-import { SearchContextConsumer } from "../../Contexts/SearchContext";
 
 function SearchResults({results, resetSearch}) {
   const history = useHistory();

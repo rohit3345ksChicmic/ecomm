@@ -2,7 +2,6 @@ import React from "react";
 import "./Modal.css";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import { UserContextConsumer } from "../../Contexts/UserContext";
 
 const Modal = ({ changeForm, viewModal, isLoggingIn, changeModalView }) => {
   return (
@@ -16,7 +15,7 @@ const Modal = ({ changeForm, viewModal, isLoggingIn, changeModalView }) => {
       {isLoggingIn ? (
         <Login changeModalView={changeModalView} changeForm={changeForm} />
       ) : (
-        <SignUp changeModalView={changeModalView} isLoggingIn={isLoggingIn} changeForm={changeForm} />
+        <SignUp isLoggingIn={isLoggingIn} changeForm={changeForm} />
       )}
     </div>
   );
