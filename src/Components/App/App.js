@@ -4,7 +4,7 @@ import "./App.css";
 import Modal from "../userAuth/Modal";
 import ProductDetail from "../Product/ProductDetail";
 import Cart from "../Cart/Cart";
-import { store } from "../../Redux/stores/store";
+import { store } from "../../Redux/Store/store";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import { getProducts } from "../../Redux/Actions";
