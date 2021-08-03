@@ -11,10 +11,8 @@ const ProductDetail = ({ changeModalView, ...props }) => {
   let { productId } = useParams();
   
   useEffect(() => {
+    dispatch(setProduct({}));
     document.title = "Product : Flipkart Clone";
-  }, []);
-
-  useEffect(() => {
     dispatch(getProduct(productId));
 
     return () => {
