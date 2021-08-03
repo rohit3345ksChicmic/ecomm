@@ -68,6 +68,7 @@
 }
 .quantityBtns .quantityControl{
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .removeProduct{
