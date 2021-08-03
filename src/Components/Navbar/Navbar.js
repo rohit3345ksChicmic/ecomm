@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SearchResults from "../Search/searchResults";
 import Button from '../Button/Button';
-import { logOut } from "../../Redux/Actions";
+import { logOut } from "../../reduxxx/Actions";
 
 export default function Navbar({ changeModalView }) {
   const dispatch = useDispatch();

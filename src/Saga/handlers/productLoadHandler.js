@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects';
-import { startLoader, stopLoader, setProducts, setProduct } from '../../Redux/Actions';
+import { startLoader, stopLoader, setProducts, setProduct } from '../../reduxxx/Actions';
 
 const headers = {
     "x-rapidapi-key":

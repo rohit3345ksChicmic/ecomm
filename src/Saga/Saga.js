@@ -1,5 +1,5 @@
 import {takeLatest} from 'redux-saga/effects';
-import { GET_PRODUCTS, GET_PRODUCT } from "../Redux/ActionTypes";
+import { GET_PRODUCTS, GET_PRODUCT } from "../reduxxx/ActionTypes";
 import { handleProductsFetch, handleSelectedProductFetch } from './handlers/productLoadHandler';
 
 export function* watcherSaga(){

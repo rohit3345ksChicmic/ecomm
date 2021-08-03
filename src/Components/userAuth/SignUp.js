@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../App/App.css";
 import Button from '../Button/Button';
 import { useSelector, useDispatch } from "react-redux";
-import { signUp } from "../../Redux/Actions";
+import { signUp } from "../../reduxxx/Actions";
 
 const SignUp = ({ changeForm, isLoggingIn }) => {
   const dispatch = useDispatch();

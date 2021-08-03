@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 import Loader from "../Loader";
 import { useParams, withRouter } from "react-router-dom";
 import { useEffect } from 'react';
-import { addToCart, getProduct, setProduct } from "../../Redux/Actions";
+import { addToCart, getProduct, setProduct } from "../../reduxxx/Actions";
 import { useSelector,useDispatch } from 'react-redux';
 
 const ProductDetail = ({changeModalView,...props}) => {
