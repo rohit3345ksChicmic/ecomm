@@ -5,6 +5,7 @@ const headers = {
     "x-rapidapi-key":
         "86bf102802msh4e6e648847fb57bp1a475bjsnb4c1de75cc9c",
     "x-rapidapi-host": "asos2.p.rapidapi.com",
+    'Content-Type': 'application/json'
 }
 const fetchObj = {
     method: "GET",
