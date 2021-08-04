@@ -247,7 +247,7 @@ class App extends React.Component {
         method: "GET",
         headers: {
           "x-rapidapi-key":
-            "625eabae30msh7331e06a5d6ef78p114934jsnc72d6b398fb8",
+            "cf059ae756msh461a1704247bc25p16a0ddjsn7fed011d5f2c",
           "x-rapidapi-host": "asos2.p.rapidapi.com",
         },
       }
@@ -534,7 +534,7 @@ class App extends React.Component {
         method: "GET",
         headers: {
           "x-rapidapi-key":
-            "625eabae30msh7331e06a5d6ef78p114934jsnc72d6b398fb8",
+            "cf059ae756msh461a1704247bc25p16a0ddjsn7fed011d5f2c",
           "x-rapidapi-host": "asos2.p.rapidapi.com",
         },
       }
@@ -597,7 +597,7 @@ class App extends React.Component {
         method: "GET",
         headers: {
           "x-rapidapi-key":
-            "625eabae30msh7331e06a5d6ef78p114934jsnc72d6b398fb8",
+            "cf059ae756msh461a1704247bc25p16a0ddjsn7fed011d5f2c",
           "x-rapidapi-host": "asos2.p.rapidapi.com",
         },
       }
