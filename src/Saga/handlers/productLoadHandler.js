@@ -3,7 +3,7 @@ import { startLoader, stopLoader, setProducts, setProduct } from '../../Redux/Ac
 
 const headers = {
     "x-rapidapi-key":
-        "86bf102802msh4e6e648847fb57bp1a475bjsnb4c1de75cc9c",
+        "cf059ae756msh461a1704247bc25p16a0ddjsn7fed011d5f2c",
     "x-rapidapi-host": "asos2.p.rapidapi.com",
     'Content-Type': 'application/json'
 }
