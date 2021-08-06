@@ -53,7 +53,7 @@ const ProductDetail = ({ changeModalView, ...props }) => {
                 props.history.push("/cart");
               }
               else {
-                alert("You have to be logged in to add product to cart");
+                alert("Please login first to add product to cart");
                 changeModalView();
               }
             }
