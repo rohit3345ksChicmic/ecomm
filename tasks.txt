@@ -1,5 +1,9 @@
-1. Create Initial States
-2. Create reducer
-3. Create store
-4. use it in the frontend using hooks
-5. 
+rows = select * from table_name where productCode=${selectedProductCode}
+
+The above query will respond with at least one row with revision No. "OE".
+It may return multiple rows with revision No. "OE", "01","02", "08"
+
+lastRow = rows[rows.length-1];
+lastRevisionNo = lastRow[revisionNo];  => OE
+
+if(isNaN(lastRevisionNo))
