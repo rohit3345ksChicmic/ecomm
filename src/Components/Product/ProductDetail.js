@@ -36,7 +36,7 @@ const ProductDetail = ({ changeModalView, ...props }) => {
       <div className="leftPane">
         {/* Image and Buy Now, Add to Cart button */}
         <div className="imageContainer">
-          <img src={`http://${selectedProduct.imageUrl}`} alt={selectedProduct.name} />
+          <img src={`https://${selectedProduct.imageUrl}`} alt={selectedProduct.name} />
         </div>
         <div className="btnContainer">
           <Button className="btn buyNow" click={() => {}}>
