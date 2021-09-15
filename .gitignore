@@ -25,3 +25,7 @@ yarn-error.log*
 .scannerwork
 sonar-project.properties
 randomUserID.js
+/public
+package.json
+README.md
+public/robots.txt
